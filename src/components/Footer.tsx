@@ -39,7 +39,7 @@ export const Footer = () => {
           </div>
           <div className="text-center lg:text-left mb-10 lg:mb-0">
             <h4 className="font-semibold text-gray-900 text-2xl mb-6">
-              Sitemap
+              Mapa do site
             </h4>
             <a
               href="#"
@@ -115,7 +115,7 @@ export const Footer = () => {
           </div>
           <div className="text-center lg:text-left">
             <h4 className="font-semibold text-gray-900 text-2xl mb-6">
-              Utility
+              Úteis
             </h4>
             <a
               href="#"

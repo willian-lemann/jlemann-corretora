@@ -39,7 +39,7 @@ export const Header = () => {
             </li>
 
             <li className="font-semibold text-gray-900 text-lg hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0">
-              <a href="#">Contact</a>
+              <a href="#">Contato</a>
             </li>
 
             <li className="font-semibold text-gray-900 text-lg hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0">
