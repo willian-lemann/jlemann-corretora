@@ -9,7 +9,6 @@ export const Header = () => {
             <img
               src="/assets/image/navbar-logo.png"
               alt="Logo img"
-              layout="fill"
               className="w-52 md:w-80 lg:w-full"
             />
 
