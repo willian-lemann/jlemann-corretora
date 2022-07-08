@@ -11,11 +11,7 @@ export const Header = () => {
       <div className="container max-w-screen-xl mx-auto px-4">
         <nav className="flex-wrap lg:flex items-center py-14 xl:relative z-10">
           <div className="flex items-center justify-between mb-10 lg:mb-0">
-            <img
-              src="/assets/image/navbar-logo.png"
-              alt="Logo img"
-              className="w-52 md:w-80 lg:w-full"
-            />
+            <h1 className="text-2xl">JLemann Corretora</h1>
 
             <button
               className="lg:hidden w-10 h-10 ml-auto flex items-center justify-center text-green-700 border border-green-700 rounded-md"
@@ -31,19 +27,19 @@ export const Header = () => {
             }`}
           >
             <li className="font-semibold text-gray-900 text-lg hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0">
-              <a href="#">Landing</a>
+              <a href="#">Projetos</a>
             </li>
 
             <li className="font-semibold text-gray-900 text-lg hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0">
-              <a href="#">Pages</a>
+              <a href="#gallery">Galeria</a>
             </li>
 
             <li className="font-semibold text-gray-900 text-lg hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0">
-              <a href="#">Contato</a>
+              <a href="#contact">Contato</a>
             </li>
 
             <li className="font-semibold text-gray-900 text-lg hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0">
-              <a href="#">About</a>
+              <a href="#">Sobre nós</a>
             </li>
           </ul>
 

@@ -1,3 +1,9 @@
+import {
+  FiCheckCircle as CheckIcon,
+  FiLock as LockIcon,
+  FiCreditCard as CreditCardIcon,
+} from "react-icons/fi";
+
 export const Feature = () => {
   return (
     <section className="bg-white py-10 md:py-16 xl:relative">
@@ -16,7 +22,7 @@ export const Feature = () => {
             </p>
             <div className="flex flex-col md:flex-row justify-center xl:justify-start space-x-4 mb-20">
               <div className="px-8 h-20 mx-auto md:mx-0 bg-gray-200 rounded-lg flex items-center justify-center mb-5 md:mb-0">
-                <i data-feather="check-circle" className=" text-green-900" />
+                <CheckIcon className="text-green-900 h-6 w-6" />
               </div>
               <div className="text-center md:text-left">
                 <h4 className="font-semibold text-gray-900 text-2xl mb-2">
@@ -30,7 +36,7 @@ export const Feature = () => {
             </div>
             <div className="flex flex-col md:flex-row justify-center xl:justify-start space-x-4 mb-20">
               <div className="px-8 h-20 mx-auto md:mx-0 bg-gray-200 rounded-lg flex items-center justify-center mb-5 md:mb-0">
-                <i data-feather="lock" className=" text-green-900" />
+                <LockIcon className="text-green-900 h-6 w-6" />
               </div>
               <div className="text-center md:text-left">
                 <h4 className="font-semibold text-gray-900 text-2xl mb-2">
@@ -44,7 +50,7 @@ export const Feature = () => {
             </div>
             <div className="flex flex-col md:flex-row justify-center xl:justify-start space-x-4">
               <div className="px-8 h-20 mx-auto md:mx-0 bg-gray-200 rounded-lg flex items-center justify-center mb-5 md:mb-0">
-                <i data-feather="credit-card" className=" text-green-900" />
+                <CreditCardIcon className=" text-green-900 w-6 h-6" />
               </div>
               <div className="text-center md:text-left">
                 <h4 className="font-semibold text-gray-900 text-2xl mb-2">
@@ -58,8 +64,7 @@ export const Feature = () => {
             </div>
           </div>
         </div>
-      </div>{" "}
-      {/* container.// */}
+      </div>
     </section>
   );
 };

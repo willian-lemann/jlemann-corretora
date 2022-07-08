@@ -1,6 +1,6 @@
 export const Galery = () => {
   return (
-    <section className="bg-white py-10 md:py-16">
+    <section id="gallery" className="bg-white py-10 md:py-16">
       <div className="container max-w-screen-xl mx-auto px-4">
         <h1 className="font-semibold text-gray-900 text-4xl text-center mb-10">
           Our Gallery
@@ -10,25 +10,25 @@ export const Galery = () => {
             href="#"
             className="px-6 py-2 bg-green-800 text-white font-semibold text-xl rounded-lg hover:bg-green-600 transition ease-in-out duration-500"
           >
-            All
+            Todos
           </a>
           <a
             href="#"
             className="px-6 py-2 text-gray-900 font-normal text-xl rounded-lg hover:bg-gray-200 hover:text-gray-400 transition ease-in-out duration-500"
           >
-            Exterior
+            Lotes
           </a>
           <a
             href="#"
             className="px-6 py-2 text-gray-900 font-normal text-xl rounded-lg hover:bg-gray-200 hover:text-gray-400 transition ease-in-out duration-500"
           >
-            Interior
+            Casas
           </a>
           <a
             href="#"
             className="px-6 py-2 text-gray-900 font-normal text-xl rounded-lg hover:bg-gray-200 hover:text-gray-400 transition ease-in-out duration-500"
           >
-            Building
+            Apartamentos
           </a>
         </div>
         <div className="flex space-x-4 md:space-x-6 lg:space-x-8">
