@@ -1,7 +1,9 @@
 import "../styles/globals.css";
-
-import type { AppProps } from "next/app";
 import Head from "next/head";
+import type { AppProps } from "next/app";
+
+import { client } from "../config/apollo";
+import { ApolloProvider } from "@apollo/client";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -12,7 +14,9 @@ function MyApp({ Component, pageProps }: AppProps) {
 
         <title>JLemann Corretora</title>
       </Head>
-      <Component {...pageProps} />;
+      <ApolloProvider client={client}>
+        <Component {...pageProps} />;
+      </ApolloProvider>
     </>
   );
 }
