@@ -51,5 +51,6 @@ export const getStaticProps: GetStaticProps = async () => {
       header,
       feature,
     },
+    revalidate: 60,
   };
 };
