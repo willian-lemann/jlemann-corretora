@@ -5,4 +5,6 @@ export interface HeaderContent {
     href: string;
     name: string;
   }>;
+  subheaderTitle: string;
+  subheaderDescription: string;
 }

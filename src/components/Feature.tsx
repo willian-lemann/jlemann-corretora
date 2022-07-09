@@ -4,7 +4,12 @@ import {
   FiCreditCard as CreditCardIcon,
 } from "react-icons/fi";
 
-export const Feature = () => {
+import { SubheaderContent } from "../types/subheader";
+
+interface FeatureProps {
+  content: SubheaderContent;
+}
+export const Feature = ({ content }: FeatureProps) => {
   return (
     <section className="bg-white py-10 md:py-16 xl:relative">
       <div className="container max-w-screen-xl mx-auto px-4">

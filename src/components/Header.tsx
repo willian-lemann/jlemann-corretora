@@ -43,23 +43,22 @@ export const Header = ({ content }: HeaderProps) => {
           </ul>
 
           <button className="px-5 py-3 lg:block border-2 border-green-700 rounded-lg font-semibold text-green-700 text-lg hover:bg-green-700 hover:text-white transition ease-linear duration-500">
-            Request quote
+            Faça uma cotação
           </button>
         </nav>
 
         <div className="flex items-center justify-center xl:justify-start">
-          <div className="mt-28 text-center xl:text-left">
+          <div className="mt-28 text-center xl:text-left w-[700px] z-20">
             <h1 className="font-semibold text-4xl md:text-6xl lg:text-7xl text-gray-900 leading-normal mb-6">
-              Get your dream <br /> house now
+              {content.subheaderTitle}
             </h1>
 
-            <p className="font-normal text-xl text-gray-400 leading-relaxed mb-12">
-              Having a sweet home is everyone's dream. Have you <br /> owned
-              your dream house?
+            <p className="font-normal text-xl text-gray-400 leading-relaxed mb-12 ">
+              {content.subheaderDescription}
             </p>
 
             <button className="px-6 py-4 bg-green-700 text-white font-semibold text-lg rounded-xl hover:bg-green-900 transition ease-in-out duration-500">
-              Contact us
+              Nos contate
             </button>
           </div>
 

@@ -1,27 +1,28 @@
 import { GetStaticProps, GetStaticPropsContext } from "next";
 
-import { client, server } from "../config/apollo";
+import { client } from "../config/apollo";
+
+import { GET_PAGE_CONTENT, PageContent } from "../lib/graphql/queries/page";
+
+import { HeaderContent } from "../types/header";
+import { SubheaderContent } from "../types/subheader";
 
 import { Header } from "../components/Header";
 import { Feature } from "../components/Feature";
 import { Galery } from "../components/Galery";
 import { Book } from "../components/Book";
 import { Footer } from "../components/Footer";
-import { GET_PAGE_CONTENT, PageContent } from "../lib/graphql/queries/page";
-import { ApolloClient, InMemoryCache } from "@apollo/client";
 
 interface HomeProps {
-  header: {
-    title: string;
-    navigation: { id: number; href: string; name: string }[];
-  };
+  header: HeaderContent;
+  feature: SubheaderContent;
 }
 
-const Home = ({ header }: HomeProps) => {
+const Home = ({ header, feature }: HomeProps) => {
   return (
     <div>
       <Header content={header} />
-      <Feature />
+      <Feature content={feature} />
       <Galery />
       <Book />
       <Footer />
@@ -39,11 +40,12 @@ export const getStaticProps: GetStaticProps = async () => {
   });
 
   const header = page.content.at(0);
+  const feature = page.content.at(1);
 
-  console.log(header);
   return {
     props: {
       header,
+      feature,
     },
   };
 };
