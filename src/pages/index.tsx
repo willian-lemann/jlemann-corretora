@@ -33,11 +33,9 @@ const Home = ({ header, feature }: HomeProps) => {
 export default Home;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const response = await client.query<PageContent>({
+  const { data } = await client.query<PageContent>({
     query: GET_PAGE_CONTENT,
   });
-
-  const data = response.data;
 
   if (!data) {
     return {
