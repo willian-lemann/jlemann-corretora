@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
+import { subscribe } from "../services/subscribe";
+import { addErrorNotification, addSuccessNotification } from "./shared/alert";
 
 export const Book = () => {
   const [content, setContent] = useState({
@@ -7,7 +9,20 @@ export const Book = () => {
     date: "",
   });
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+
+    try {
+      console.log(content.email);
+      await subscribe(content.email);
+      addSuccessNotification(
+        "Inscrição realizada com sucesso!, Breve você receberá mais informações em seu e-mail"
+      );
+    } catch (error) {
+      console.log(error);
+      addErrorNotification("Erro ao tentar se inscrever, tente novamente!");
+    }
+  };
 
   return (
     <section id="contact" className="bg-white py-10 md:py-16">
@@ -27,7 +42,10 @@ export const Book = () => {
           <div className="hidden xl:block xl:absolute right-0">
             <img src="/assets/image/book.png" alt="Image" />
           </div>
-          <div className="hidden md:block bg-white xl:relative px-6 py-3 rounded-3xl">
+          <form
+            className="hidden md:block bg-white xl:relative px-6 py-3 rounded-3xl"
+            onSubmit={handleSubmit}
+          >
             <div className="py-3">
               <h3 className="font-semibold text-gray-900 text-3xl">
                 Agende uma visita
@@ -39,13 +57,20 @@ export const Book = () => {
                 placeholder="Full Name"
                 className="px-4 py-4 w-96 bg-gray-100 placeholder-gray-400 rounded-xl outline-none"
                 value={content.name}
+                onChange={({ target }) => {
+                  setContent({ ...content, name: target.value });
+                }}
               />
             </div>
             <div className="py-3">
               <input
-                type="text"
+                type="email"
                 placeholder="Email"
+                value={content.email}
                 className="px-4 py-4 w-96 bg-gray-100 placeholder-gray-400 rounded-xl outline-none"
+                onChange={({ target }) => {
+                  setContent({ ...content, email: target.value });
+                }}
               />
             </div>
             <div className="py-3 relative">
@@ -70,13 +95,13 @@ export const Book = () => {
             </div>
             <div className="py-3">
               <button
+                type="submit"
                 className="w-full py-4 font-semibold text-lg text-white bg-green-700 rounded-xl hover:bg-green-900 transition ease-in-out duration-500"
-                onClick={handleSubmit}
               >
                 Booking
               </button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </section>
