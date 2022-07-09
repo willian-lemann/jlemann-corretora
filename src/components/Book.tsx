@@ -1,8 +1,13 @@
 import { FormEvent, useState } from "react";
+
 import { subscribe } from "../services/subscribe";
+
 import { addErrorNotification, addSuccessNotification } from "./shared/alert";
 
+import { Loading } from "../components/shared/loading";
+
 export const Book = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [content, setContent] = useState({
     name: "",
     email: "",
@@ -12,8 +17,9 @@ export const Book = () => {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
+    setIsLoading(true);
+
     try {
-      console.log(content.email);
       await subscribe(content.email);
       addSuccessNotification(
         "Inscrição realizada com sucesso!, Breve você receberá mais informações em seu e-mail"
@@ -21,6 +27,8 @@ export const Book = () => {
     } catch (error) {
       console.log(error);
       addErrorNotification("Erro ao tentar se inscrever, tente novamente!");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -96,9 +104,13 @@ export const Book = () => {
             <div className="py-3">
               <button
                 type="submit"
-                className="w-full py-4 font-semibold text-lg text-white bg-green-700 rounded-xl hover:bg-green-900 transition ease-in-out duration-500"
+                className="w-full h-[53px] flex items-center justify-center font-semibold text-lg text-white bg-green-700 rounded-xl hover:bg-green-900 transition ease-in-out duration-500"
               >
-                Booking
+                {isLoading ? (
+                  <Loading type="spin" height={20} width={20} />
+                ) : (
+                  "Inscrever-se"
+                )}
               </button>
             </div>
           </form>

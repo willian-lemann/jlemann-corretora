@@ -1,1 +1,3 @@
-export * as Loading from "react-loading";
+import Loading from "react-loading";
+
+export { Loading };
