@@ -16,18 +16,11 @@ export const GET_PAGE_CONTENT = gql`
           subheaderTitle
           subheaderDescription
         }
-      }
-    }
-  }
-`;
 
-export const GET_SUBHEADER_CONTENT = gql`
-  query {
-    page(where: { id: "cl5dee5zf48740bkn2iwfe3qg" }) {
-      content {
-        ... on Subheader {
+        ... on Feature {
           title
           description
+          features
         }
       }
     }

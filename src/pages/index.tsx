@@ -1,4 +1,4 @@
-import { GetStaticProps, GetStaticPropsContext } from "next";
+import { GetStaticProps } from "next";
 
 import { client } from "../config/apollo";
 

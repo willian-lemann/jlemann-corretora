@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 import { HeaderContent } from "../types/header";
@@ -37,7 +37,7 @@ export const Header = ({ content }: HeaderProps) => {
                 key={item.id}
                 className="font-semibold text-gray-900 text-lg hover:text-gray-400 transition ease-in-out duration-300 mb-5 lg:mb-0"
               >
-                <a href={item.href}>{item.name}</a>
+                <Link href={item.href}>{item.name}</Link>
               </li>
             ))}
           </ul>

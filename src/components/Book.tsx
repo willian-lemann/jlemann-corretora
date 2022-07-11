@@ -2,7 +2,10 @@ import { FormEvent, useState } from "react";
 
 import { subscribe } from "../services/subscribe";
 
-import { addErrorNotification, addSuccessNotification } from "./shared/alert";
+import {
+  addErrorNotification,
+  addSuccessNotification,
+} from "../components/shared/alert";
 
 import { Loading } from "../components/shared/loading";
 
@@ -33,11 +36,11 @@ export const Book = () => {
   };
 
   return (
-    <section id="contact" className="bg-white py-10 md:py-16">
+    <section id="contacts" className="bg-white py-10 md:py-16">
       <div className="container max-w-screen-xl mx-auto px-4 xl:relative">
         <div className="bg-green-800 flex flex-col lg:flex-row items-center justify-evenly py-14 rounded-3xl">
           <div className="text-center lg:text-left mb-10 lg:mb-0">
-            <h1 className="font-semibold text-white text-4xl md:text-5xl lg:text-7xl leading-normal mb-4">
+            <h1 className="font-semibold text-white text-4xl md:text-5xl lg:leading-[5rem] lg:text-7xl mb-4">
               Fale com a gente
               <br /> para discutir
             </h1>
