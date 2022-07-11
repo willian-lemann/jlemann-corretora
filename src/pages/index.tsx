@@ -7,11 +7,11 @@ import { GET_PAGE_CONTENT, PageContent } from "../lib/graphql/queries/page";
 import { HeaderContent } from "../types/header";
 import { SubheaderContent } from "../types/subheader";
 
-import { Header } from "../components/Header";
-import { Feature } from "../components/Feature";
-import { Galery } from "../components/Galery";
-import { Book } from "../components/Book";
-import { Footer } from "../components/Footer";
+import { Header } from "../components/home/Header";
+import { Feature } from "../components/home/Feature";
+import { Galery } from "../components/home/Galery";
+import { Book } from "../components/home/Book";
+import { Footer } from "../components/home/Footer";
 
 interface HomeProps {
   header: HeaderContent;

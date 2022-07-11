@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { useState } from "react";
 
-import { HeaderContent } from "../types/header";
+import { HeaderContent } from "../../types/header";
 
 import { FiMenu as MenuIcon } from "react-icons/fi";
+import { QuoteModal } from "./QuoteModal";
 
 interface HeaderProps {
   content: HeaderContent;
@@ -42,9 +43,7 @@ export const Header = ({ content }: HeaderProps) => {
             ))}
           </ul>
 
-          <button className="px-5 py-3 lg:block border-2 border-green-700 rounded-lg font-semibold text-green-700 text-lg hover:bg-green-700 hover:text-white transition ease-linear duration-500">
-            Faça uma cotação
-          </button>
+          <QuoteModal />
         </nav>
 
         <div className="flex items-center justify-center xl:justify-start">

@@ -1,8 +1,8 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 
-export function Modal() {
-  let [isOpen, setIsOpen] = useState(true);
+export function QuoteModal() {
+  let [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
     setIsOpen(false);
@@ -14,18 +14,21 @@ export function Modal() {
 
   return (
     <>
-      <div className="fixed inset-0 flex items-center justify-center">
+      <div
+        className={`${
+          isOpen ? "" : ""
+        }  inset-0 flex items-center justify-center`}
+      >
         <button
-          type="button"
           onClick={openModal}
-          className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+          className="px-5 py-3 lg:block border-2 border-green-700 rounded-lg font-semibold text-green-700 text-lg hover:bg-green-700 hover:text-white transition ease-linear duration-500"
         >
-          Open dialog
+          Faça uma cotação
         </button>
       </div>
 
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+        <Dialog as="div" className="relative z-20" onClose={closeModal}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -54,7 +57,7 @@ export function Modal() {
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Payment successful
+                    Faca nos uma cotacao
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">

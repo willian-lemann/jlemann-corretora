@@ -4,7 +4,7 @@ import {
   FiCreditCard as CreditCardIcon,
 } from "react-icons/fi";
 
-import { SubheaderContent } from "../types/subheader";
+import { SubheaderContent } from "../../types/subheader";
 
 interface FeatureProps {
   content: SubheaderContent;

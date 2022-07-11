@@ -1,13 +1,13 @@
 import { FormEvent, useState } from "react";
 
-import { subscribe } from "../services/subscribe";
+import { subscribe } from "../../services/subscribe";
 
 import {
   addErrorNotification,
   addSuccessNotification,
-} from "../components/shared/alert";
+} from "../../components/shared/alert";
 
-import { Loading } from "../components/shared/loading";
+import { Loading } from "../../components/shared/loading";
 
 export const Book = () => {
   const [isLoading, setIsLoading] = useState(false);
