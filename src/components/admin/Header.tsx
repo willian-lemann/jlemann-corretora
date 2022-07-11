@@ -29,10 +29,6 @@ const userNavigation = [
 ];
 
 export const Header = () => {
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(" ");
-  }
-
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -53,12 +49,8 @@ export const Header = () => {
                       <a
                         key={item.name}
                         href={item.href}
-                        className={classNames(
-                          item.current
-                            ? "bg-gray-900 text-white"
-                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                          "px-3 py-2 rounded-md text-sm font-medium"
-                        )}
+                        className="text-gray-300 hover:bg-gray-700 hover:text-white
+                        px-3 py-2 rounded-md text-sm font-medium"
                         aria-current={item.current ? "page" : undefined}
                       >
                         {item.name}
@@ -104,10 +96,7 @@ export const Header = () => {
                             {({ active }) => (
                               <a
                                 href={item.href}
-                                className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
-                                )}
+                                className="block px-4 py-2 text-sm text-gray-700"
                               >
                                 {item.name}
                               </a>
@@ -140,12 +129,8 @@ export const Header = () => {
                   key={item.name}
                   as="a"
                   href={item.href}
-                  className={classNames(
-                    item.current
-                      ? "bg-gray-900 text-white"
-                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                    "block px-3 py-2 rounded-md text-base font-medium"
-                  )}
+                  className="text-gray-300 hover:bg-gray-700 hover:text-white
+                  block px-3 py-2 rounded-md text-base font-medium"
                   aria-current={item.current ? "page" : undefined}
                 >
                   {item.name}
