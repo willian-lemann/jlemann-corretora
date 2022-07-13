@@ -59,6 +59,5 @@ export const getStaticProps: GetStaticProps = async () => {
       feature,
       gallery,
     },
-    revalidate: 60,
   };
 };
