@@ -4,26 +4,31 @@ import { client } from "../config/apollo";
 
 import { GET_PAGE_CONTENT, PageContent } from "../lib/graphql/queries/page";
 
-import { HeaderContent } from "../types/header";
-import { SubheaderContent } from "../types/subheader";
+import { HeaderContent, SubheaderContent, GalleryContent } from "../types";
 
 import { Header } from "../components/home/Header";
 import { Feature } from "../components/home/Feature";
-import { Galery } from "../components/home/Galery";
+import { Gallery } from "../components/home/Gallery";
 import { Book } from "../components/home/Book";
 import { Footer } from "../components/home/Footer";
+import { useEffect } from "react";
 
 interface HomeProps {
   header: HeaderContent;
   feature: SubheaderContent;
+  gallery: GalleryContent;
 }
 
-const Home = ({ header, feature }: HomeProps) => {
+const Home = ({ header, feature, gallery }: HomeProps) => {
+  useEffect(() => {
+    fetch("/api/revalidate");
+  }, []);
+
   return (
     <div>
       <Header content={header} />
       <Feature content={feature} />
-      <Galery />
+      <Gallery content={gallery} />
       <Book />
       <Footer />
     </div>
@@ -45,12 +50,13 @@ export const getStaticProps: GetStaticProps = async () => {
 
   const header = data.page.content.at(0);
   const feature = data.page.content.at(1);
+  const gallery = data.page.content.at(2);
 
   return {
     props: {
       header,
       feature,
+      gallery,
     },
-    revalidate: 60,
   };
 };

@@ -1,7 +1,8 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { useState } from "react";
 
-import { HeaderContent } from "../../types/header";
+import { HeaderContent } from "../../types";
 
 import { FiMenu as MenuIcon } from "react-icons/fi";
 import { QuoteModal } from "./QuoteModal";

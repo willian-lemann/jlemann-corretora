@@ -22,6 +22,11 @@ export const GET_PAGE_CONTENT = gql`
           description
           features
         }
+
+        ... on Gallery {
+          title
+          categories
+        }
       }
     }
   }

@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import Image from "next/image";
 
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 
@@ -37,8 +38,9 @@ export const Header = () => {
             <div className="flex items-center justify-between h-16">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <img
-                    className="h-8 w-8"
+                  <Image
+                    height="2rem"
+                    width="2rem"
                     src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
                     alt="Workflow"
                   />
@@ -74,10 +76,12 @@ export const Header = () => {
                     <div>
                       <Menu.Button className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                         <span className="sr-only">Open user menu</span>
-                        <img
-                          className="h-8 w-8 rounded-full"
+                        <Image
+                          height="2rem"
+                          width="2rem"
+                          className="rounded-full"
                           src={user.imageUrl}
-                          alt=""
+                          alt="avatar image"
                         />
                       </Menu.Button>
                     </div>
@@ -140,8 +144,10 @@ export const Header = () => {
             <div className="pt-4 pb-3 border-t border-gray-700">
               <div className="flex items-center px-5">
                 <div className="flex-shrink-0">
-                  <img
-                    className="h-10 w-10 rounded-full"
+                  <Image
+                    height="2.5rem"
+                    width="2.5rem"
+                    className="rounded-full"
                     src={user.imageUrl}
                     alt=""
                   />
