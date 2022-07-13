@@ -20,8 +20,11 @@ interface HomeProps {
 }
 
 const Home = ({ header, feature, gallery }: HomeProps) => {
-  useEffect(() => {
+  function revalidate() {
     fetch("/api/revalidate");
+  }
+  useEffect(() => {
+    revalidate();
   }, []);
 
   return (
