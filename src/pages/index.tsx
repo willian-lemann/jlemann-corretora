@@ -23,12 +23,10 @@ const Home = ({ header, feature, gallery }: HomeProps) => {
   function revalidate() {
     fetch("/api/revalidate");
   }
-  useEffect(() => {
-    revalidate();
-  }, []);
 
   return (
     <div>
+      <button onClick={() => revalidate()}>revalidate</button>
       <Header content={header} />
       <Feature content={feature} />
       <Gallery content={gallery} />
