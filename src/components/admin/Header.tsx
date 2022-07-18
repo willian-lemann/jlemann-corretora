@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import Image from "next/image";
 
-import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { Disclosure, Menu, Tab, Transition } from "@headlessui/react";
 
 import {
   FiBell as BellIcon,
@@ -16,12 +16,17 @@ const user = {
     "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 };
 const navigation = [
-  { name: "Meu dashboard", href: "#", current: true },
-  { name: "Gerenciamento de time", href: "#", current: false },
-  { name: "Projetos", href: "#", current: false },
-  { name: "Calendario", href: "#", current: false },
-  { name: "Relatórios", href: "#", current: false },
-  { name: "Senhas", href: "#", current: false },
+  { name: "Meu dashboard", href: "#", current: true, tabDisabled: false },
+  { name: "Senhas", href: "#", current: false, tabDisabled: false },
+  {
+    name: "Gerenciamento de time",
+    href: "#",
+    current: false,
+    tabDisabled: false,
+  },
+  { name: "Projetos", href: "#", current: false, tabDisabled: false },
+  { name: "Calendario", href: "#", current: false, tabDisabled: false },
+  { name: "Relatórios", href: "#", current: false, tabDisabled: false },
 ];
 const userNavigation = [
   { name: "Meu Perfil", href: "#" },
@@ -47,17 +52,20 @@ export const Header = () => {
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
-                    {navigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className="text-gray-300 hover:bg-gray-700 hover:text-white
+                    <Tab.List>
+                      {navigation.map((item) => (
+                        <Tab
+                          as="a"
+                          key={item.name}
+                          href={item.href}
+                          className="text-gray-300 hover:bg-gray-700 hover:text-white
                         px-3 py-2 rounded-md text-sm font-medium"
-                        aria-current={item.current ? "page" : undefined}
-                      >
-                        {item.name}
-                      </a>
-                    ))}
+                          aria-current={item.current ? "page" : undefined}
+                        >
+                          {item.name}
+                        </Tab>
+                      ))}
+                    </Tab.List>
                   </div>
                 </div>
               </div>

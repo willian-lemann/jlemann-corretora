@@ -5,6 +5,7 @@ const nextConfig = {
     locales: ["pt"],
     defaultLocale: "pt",
   },
+  images: { domains: ["tailwindui.com", "images.unsplash.com"] },
 };
 
 module.exports = nextConfig;

@@ -1,6 +1,9 @@
 /* This example requires Tailwind CSS v2.0+ */
+import { Tab } from "@headlessui/react";
 import { useEffect, useState } from "react";
+import { Dashboard } from "../components/admin/Dashboard";
 import { Header } from "../components/admin/Header";
+import { Passwords } from "../components/admin/Passwords";
 
 import { getSubscribers } from "../services/get-subscribers";
 
@@ -20,23 +23,19 @@ const Admin = () => {
   }, []);
 
   return (
-    <div className="min-h-full">
+    <Tab.Group as="div" className="min-h-full">
       <Header />
 
-      <header className="bg-white shadow">
-        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-          <span>Numeros de inscritos: {subscribers.length}</span>
-        </div>
-      </header>
-      <main>
-        <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-          <div className="px-4 py-6 sm:px-0">
-            <div className="border-4 border-dashed border-gray-200 rounded-lg h-96" />
-          </div>
-        </div>
-      </main>
-    </div>
+      <Tab.Panels>
+        <Tab.Panel>
+          <Dashboard subscribers={subscribers.length} />
+        </Tab.Panel>
+
+        <Tab.Panel>
+          <Passwords />
+        </Tab.Panel>
+      </Tab.Panels>
+    </Tab.Group>
   );
 };
 

@@ -14,8 +14,6 @@ export default async function handler(
     await response.revalidate("/");
     return response.status(200).json({ revalidated: true });
   } catch (err) {
-    // If there was an error, Next.js will continue
-    // to show the last successfully generated page
     return response.status(500).send("Error revalidating");
   }
 }
