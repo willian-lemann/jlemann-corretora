@@ -24,6 +24,10 @@ const Home = ({ header, feature, gallery }: HomeProps) => {
     fetch("/api/revalidate");
   }
 
+  if (!header) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <div>
       <button onClick={() => revalidate()}>revalidate</button>
