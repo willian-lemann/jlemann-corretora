@@ -1,35 +1,133 @@
+import { KeyboardEvent, memo, useRef, useState } from "react";
+
 export interface Password {
   id: string;
   key: string;
   value: string;
 }
 
-interface PasswordItemProps {
-  password: Password;
+export type Property = "key" | "value";
+
+interface Editing {
+  id: string;
+  property: Property;
 }
 
-export const PasswordItem = ({ password }: PasswordItemProps) => {
-  return (
-    <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-        {password.id}
-      </td>
-      <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-        {password.key}
-      </td>
-      <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-        {password.value}
-      </td>
-      <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-        <div className="flex items-center">
-          <button className="hover:text-gray-500 transition-colors duration-300 p-2">
-            Editar
-          </button>
-          <button className="ml-4 hover:text-red-300 transition-colors duration-300 p-2">
-            Deletar
-          </button>
-        </div>
-      </td>
-    </tr>
-  );
-};
+interface PasswordItemProps {
+  password: Password;
+  onChangeData: (id: string, property: Property, value: string) => void;
+}
+
+export const PasswordItem = memo(
+  ({ password, onChangeData }: PasswordItemProps) => {
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    const [editing, setEditing] = useState<Editing[]>([]);
+
+    const handleEditing = (id: string, property: Property) => {
+      const alreadyExist = editing.find((item) => item.id === id);
+
+      if (alreadyExist) {
+        const newEditing = editing.map((item) => {
+          if (item.id === id) {
+            return {
+              ...item,
+              property,
+            };
+          }
+
+          return item;
+        });
+
+        return setEditing(newEditing);
+      }
+
+      setEditing([...editing, { id, property }]);
+
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100);
+    };
+
+    const handleSubmit = (
+      event: KeyboardEvent<HTMLInputElement> | null,
+      id: string
+    ) => {
+      if (!event) {
+        return setEditing(editing.filter((item) => item.id !== password.id));
+      }
+
+      if (event.key === "Enter") {
+        setEditing(editing.filter((item) => item.id !== password.id));
+      }
+    };
+
+    const currentEditingItem = editing.find((item) => item.id === password.id);
+
+    return (
+      <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
+        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+          {password.id}
+        </td>
+        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+          {currentEditingItem?.id === password.id &&
+          currentEditingItem?.property === "key" ? (
+            <input
+              ref={inputRef}
+              type="text"
+              className="outline-none px-2 py-1 w-full max-w-xs bg-transparent border-none"
+              value={password.key}
+              placeholder="Digite o nome da senha"
+              onBlur={() => handleSubmit(null, password.id)}
+              onKeyUp={(event) => handleSubmit(event, password.id)}
+              onChange={({ target }) =>
+                onChangeData(password.id, "key", target.value)
+              }
+            />
+          ) : (
+            <span
+              onClick={() => handleEditing(password.id, "key")}
+              className="cursor-pointer opacity-60"
+            >
+              {password.key || "Digite uma senha..."}
+            </span>
+          )}
+        </td>
+        <td
+          className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
+          onClick={() => handleEditing(password.id, "value")}
+        >
+          {currentEditingItem?.id === password.id &&
+          currentEditingItem?.property === "value" ? (
+            <input
+              ref={inputRef}
+              type="text"
+              className="w-full max-w-xs outline-none border-none px-2 py-1 bg-transparent"
+              value={password.value}
+              placeholder="Digite o valor para a senha"
+              onBlur={() => handleSubmit(null, password.id)}
+              onKeyUp={(event) => handleSubmit(event, password.id)}
+              onChange={({ target }) =>
+                onChangeData(password.id, "value", target.value)
+              }
+            />
+          ) : (
+            <span
+              onClick={() => handleEditing(password.id, "key")}
+              className="cursor-pointer opacity-60"
+            >
+              {password.value || "Digite um valor para a senha..."}
+            </span>
+          )}
+        </td>
+        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+          <div className="flex items-center">
+            <button className="hover:text-red-300 transition-colors duration-300 p-2">
+              Deletar
+            </button>
+          </div>
+        </td>
+      </tr>
+    );
+  }
+);

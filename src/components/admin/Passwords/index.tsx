@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { PasswordItem, Password } from "./PasswordItem";
+import { useCallback, useState } from "react";
+import { PasswordItem, Password, Property } from "./PasswordItem";
 
 export const Passwords = () => {
   const [passwords, setPasswords] = useState<Password[]>([
@@ -9,6 +9,27 @@ export const Passwords = () => {
       value: "senhavalue",
     },
   ]);
+
+  const handleChangeInput = useCallback(
+    (id: string, property: Property, value: string | null) => {
+      const previousPasswords = structuredClone(passwords);
+
+      console.log(value);
+      const newPasswords = passwords.map((password) => {
+        if (password.id === id) {
+          return {
+            ...password,
+            [property]: value,
+          };
+        }
+
+        return password;
+      });
+
+      setPasswords(newPasswords);
+    },
+    [passwords]
+  );
 
   return (
     <div className="container m-auto mx-auto py-6 px-4 sm:px-6 lg:px-8">
@@ -29,7 +50,7 @@ export const Passwords = () => {
                       scope="col"
                       className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
                     >
-                      Nome
+                      Nome da senha
                     </th>
                     <th
                       scope="col"
@@ -48,7 +69,11 @@ export const Passwords = () => {
 
                 <tbody>
                   {passwords.map((password) => (
-                    <PasswordItem key={password.id} password={password} />
+                    <PasswordItem
+                      key={password.id}
+                      password={password}
+                      onChangeData={handleChangeInput}
+                    />
                   ))}
                 </tbody>
               </table>
