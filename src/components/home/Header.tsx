@@ -63,7 +63,11 @@ export const Header = ({ content }: HeaderProps) => {
           </div>
 
           <div className="hidden xl:block xl:absolute z-0 top-0 right-0">
-            <img src="/assets/image/home-img.png" alt="Home img" />
+            <img
+              src="/assets/image/home-img.png"
+              alt="Home img"
+              placeholder="blur"
+            />
           </div>
         </div>
       </div>
