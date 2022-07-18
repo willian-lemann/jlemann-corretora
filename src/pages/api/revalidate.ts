@@ -4,10 +4,9 @@ export default async function handler(
   request: NextApiRequest,
   response: NextApiResponse
 ) {
-  // // Check for secret to confirm this is a valid request
-  // if (request.query.secret !== process.env.MY_SECRET_TOKEN) {
-  //   return response.status(401).json({ message: "Invalid token" });
-  // }
+  if (request.query.secret !== process.env.REVALIDATE_SECRET_TOKEN) {
+    return response.status(401).json({ message: "Invalid token" });
+  }
 
   try {
     await response.revalidate("/");

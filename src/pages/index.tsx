@@ -20,17 +20,12 @@ interface HomeProps {
 }
 
 const Home = ({ header, feature, gallery }: HomeProps) => {
-  function revalidate() {
-    fetch("/api/revalidate");
-  }
-
   if (!header) {
     return <p>Loading...</p>;
   }
 
   return (
     <div>
-      <button onClick={() => revalidate()}>revalidate</button>
       <Header content={header} />
       <Feature content={feature} />
       <Gallery content={gallery} />
