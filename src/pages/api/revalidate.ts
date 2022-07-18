@@ -12,7 +12,7 @@ export default async function handler(
 
   try {
     await response.revalidate("/");
-    return response.json({ revalidated: true });
+    return response.status(200).json({ revalidated: true });
   } catch (err) {
     // If there was an error, Next.js will continue
     // to show the last successfully generated page
