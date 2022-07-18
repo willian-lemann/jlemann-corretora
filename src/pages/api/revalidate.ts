@@ -7,6 +7,8 @@ export default async function handler(
   if (request.query.secret !== process.env.REVALIDATE_SECRET_TOKEN) {
     return response.status(401).json({
       message: "Invalid token",
+      body: request.body,
+      query: request.query,
     });
   }
 
