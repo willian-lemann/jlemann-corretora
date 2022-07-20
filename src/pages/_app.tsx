@@ -2,9 +2,9 @@ import "../styles/globals.css";
 import Head from "next/head";
 import type { AppProps } from "next/app";
 
-import { client } from "../config/apollo";
 import { ApolloProvider } from "@apollo/client";
 import { AlertProvider } from "../components/shared/alert";
+import { apolloClient } from "../config/apollo";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
         <title>JLemann Corretora</title>
       </Head>
-      <ApolloProvider client={client}>
+      <ApolloProvider client={apolloClient}>
         <AlertProvider />
         <Component {...pageProps} />
       </ApolloProvider>

@@ -1,7 +1,5 @@
 import { GetStaticProps } from "next";
 
-import { client } from "../config/apollo";
-
 import { GET_PAGE_CONTENT, PageContent } from "../lib/graphql/queries/page";
 
 import { HeaderContent, SubheaderContent, GalleryContent } from "../types";
@@ -11,7 +9,7 @@ import { Feature } from "../components/home/Feature";
 import { Gallery } from "../components/home/Gallery";
 import { Book } from "../components/home/Book";
 import { Footer } from "../components/home/Footer";
-import { useEffect } from "react";
+import { apolloClient } from "../config/apollo";
 
 interface HomeProps {
   header: HeaderContent;
@@ -38,13 +36,15 @@ const Home = ({ header, feature, gallery }: HomeProps) => {
 export default Home;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { data } = await client.query<PageContent>({
+  const { data } = await apolloClient.query<PageContent>({
     query: GET_PAGE_CONTENT,
   });
 
   if (!data) {
     return {
-      props: {},
+      props: {
+        initialApolloState: apolloClient.cache.extract(),
+      },
     };
   }
 
@@ -57,6 +57,7 @@ export const getStaticProps: GetStaticProps = async () => {
       header,
       feature,
       gallery,
+      initialApolloState: apolloClient.cache.extract(),
     },
   };
 };

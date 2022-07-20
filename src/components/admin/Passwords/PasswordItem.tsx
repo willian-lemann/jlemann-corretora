@@ -1,10 +1,6 @@
 import { KeyboardEvent, memo, useRef, useState } from "react";
-
-export interface Password {
-  id: string;
-  key: string;
-  value: string;
-}
+import { useDeletePassword } from "../../../lib/graphql/mutations/passwords";
+import { Password } from "../../../types/passwords";
 
 export type Property = "key" | "value";
 
@@ -16,10 +12,11 @@ interface Editing {
 interface PasswordItemProps {
   password: Password;
   onChangeData: (id: string, property: Property, value: string) => void;
+  onRemovePassword: (id: string) => Promise<void>;
 }
 
 export const PasswordItem = memo(
-  ({ password, onChangeData }: PasswordItemProps) => {
+  ({ password, onChangeData, onRemovePassword }: PasswordItemProps) => {
     const inputRef = useRef<HTMLInputElement>(null);
 
     const [editing, setEditing] = useState<Editing[]>([]);
@@ -49,6 +46,10 @@ export const PasswordItem = memo(
       }, 100);
     };
 
+    const handleDeletePassword = (id: any) => {
+      deletePassword({ variables: { id } });
+    };
+
     const handleSubmit = (
       event: KeyboardEvent<HTMLInputElement> | null,
       id: string
@@ -65,7 +66,7 @@ export const PasswordItem = memo(
     const currentEditingItem = editing.find((item) => item.id === password.id);
 
     return (
-      <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
+      <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100 relative">
         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
           {password.id}
         </td>
@@ -93,10 +94,7 @@ export const PasswordItem = memo(
             </span>
           )}
         </td>
-        <td
-          className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
-          onClick={() => handleEditing(password.id, "value")}
-        >
+        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
           {currentEditingItem?.id === password.id &&
           currentEditingItem?.property === "value" ? (
             <input
@@ -120,12 +118,8 @@ export const PasswordItem = memo(
             </span>
           )}
         </td>
-        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-          <div className="flex items-center">
-            <button className="hover:text-red-300 transition-colors duration-300 p-2">
-              Deletar
-            </button>
-          </div>
+        <td className="text-sm text-gray-900 font-light px-6 py-4">
+          <button onClick={() => onRemovePassword(password.id)}>Deletar</button>
         </td>
       </tr>
     );
