@@ -3,11 +3,9 @@ import { Password } from "../../../types/passwords";
 import { GET_PASSWORDS } from "../queries/passwords";
 
 export const CREATE_PASSWORD = gql`
-  mutation {
-    createPassword(data: { key: $key, value: $value }) {
-      id
-      key
-      value
+  mutation ($data: PasswordCreateInput = { key: "", value: "" }) {
+    createPassword(data: $data) {
+      documentInStages(stages: PUBLISHED)
     }
   }
 `;
