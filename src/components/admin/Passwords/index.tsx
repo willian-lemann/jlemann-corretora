@@ -1,31 +1,32 @@
-import { useQuery } from "@apollo/client";
-import { uuid } from "uuidv4";
 import { useCallback, useEffect, useState } from "react";
+import { uuid } from "uuidv4";
 import {
   useCreatePassword,
   useDeletePassword,
+  usePublishPassword,
 } from "../../../lib/graphql/mutations/passwords";
 
 import { usePasswords } from "../../../lib/graphql/queries/passwords";
 import { Password } from "../../../types/passwords";
 
+import { addErrorNotification } from "../../shared/alert";
 import { PasswordItem, Property } from "./PasswordItem";
 
 export const Passwords = () => {
   const { data } = usePasswords();
-  const { deletePassword } = useDeletePassword();
-  const { createPassword, error: createPasswordError } = useCreatePassword();
-
-  const [passwordValue, setPasswordValue] = useState<Password>({
-    id: "",
-    key: "",
-    value: "",
-  });
+  const {
+    deletePassword,
+    error: hasDeleteError,
+    loading: isDeleting,
+  } = useDeletePassword();
+  const { createPassword, error: hasCreateError } = useCreatePassword();
+  const { publishPassword, error: hasPublishingError } = usePublishPassword();
+  const [isAddingPassword, setIsAddingPassword] = useState<string[]>([]);
 
   const [passwords, setPasswords] = useState<Password[]>([]);
 
   const handleChangeInput = useCallback(
-    (id: string, property: Property, value: string | null) => {
+    (id: string | null, property: Property, value: string | null) => {
       const newPasswords = passwords.map((password) => {
         if (password.id === id) {
           return {
@@ -42,30 +43,97 @@ export const Passwords = () => {
     [passwords]
   );
 
+  const handleAddMore = (id: string, newId: string) => {
+    if (id) {
+      const newPasswords = passwords.map((password) => {
+        if (password.id === id) {
+          return {
+            ...password,
+            id: newId,
+            defaultValue: false,
+          };
+        }
+
+        return password;
+      });
+
+      setPasswords(newPasswords);
+    }
+
+    setPasswords((state) => [
+      ...state,
+      { id: uuid(), key: "", value: "", defaultValue: true },
+    ]);
+  };
+
+  console.log(passwords);
+
   const handleAddPassword = async (password: Password) => {
-    const lastElement = passwords.at(-1);
+    if (password.key === "" && password.value === "")
+      return addErrorNotification("Precisa preeencher os campos!");
 
-    if (lastElement?.key === "" || lastElement?.value === "") return;
+    setIsAddingPassword((state) => [...state, String(password.id)]);
 
-    setPasswords((state) => [...state, password]);
-    setPasswordValue({ id: uuid(), key: "", value: "" });
+    try {
+      const {
+        data: {
+          createPassword: { id },
+        },
+      } = await createPassword({
+        variables: { data: { key: password.key, value: password.value } },
+      });
+
+      const {
+        data: {
+          publishPassword: { id: publishId },
+        },
+      } = await publishPassword({ variables: { id } });
+
+      handleAddMore(String(password.id), publishId);
+    } catch (error) {
+    } finally {
+      setIsAddingPassword((state) =>
+        state.filter((item) => item !== password.id)
+      );
+    }
   };
 
   const handleRemovePassword = async (id: string | null) => {
-    setPasswords(passwords.filter((item) => item.id !== id));
+    const previousPasswords = structuredClone(passwords);
 
-    deletePassword({ variables: { id } });
+    setPasswords((state) => state.filter((password) => password.id !== id));
+
+    try {
+      await deletePassword({ variables: { id } });
+
+      if (hasDeleteError) {
+        setPasswords(previousPasswords);
+        addErrorNotification(hasDeleteError.message);
+        return;
+      }
+    } catch (error) {
+      setPasswords(previousPasswords);
+      addErrorNotification("Erro ao excluir senha");
+    }
   };
 
   useEffect(() => {
-    console.log(data?.passwords);
     if (data) {
-      setPasswords((state) => [...state, ...data?.passwords]);
+      setPasswords((state) => [...state, ...data.passwords]);
     }
-  }, [data, data?.passwords]);
+  }, [data]);
 
   return (
     <div className="container m-auto mx-auto py-6 px-4 sm:px-6 lg:px-8 outline-none">
+      <section className="flex justify-end w-full">
+        <button
+          className="hover:bg-purple-800 hover:text-white py-2 px-2 rounded-md transition-colors duration-300"
+          onClick={handleAddMore}
+        >
+          Adicionar mais
+        </button>
+      </section>
+
       <div className="flex flex-col">
         <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
@@ -96,28 +164,20 @@ export const Passwords = () => {
 
                 <tbody>
                   {passwords?.map((password) => (
-                    <PasswordItem
-                      key={password.id}
-                      password={password}
-                      onChangeData={handleChangeInput}
-                      onAddPassword={handleAddPassword}
-                      onRemovePassword={handleRemovePassword}
-                    />
+                    <>
+                      <PasswordItem
+                        key={password.id}
+                        defaultValue={password.defaultValue}
+                        password={password}
+                        isAdding={isAddingPassword.includes(
+                          String(password.id)
+                        )}
+                        onChangeData={handleChangeInput}
+                        onAddPassword={handleAddPassword}
+                        onRemovePassword={handleRemovePassword}
+                      />
+                    </>
                   ))}
-
-                  <PasswordItem
-                    defaultItem
-                    password={passwordValue}
-                    onChangeData={(id, property, value) =>
-                      setPasswordValue((state) => ({
-                        ...state,
-                        id,
-                        [property]: value,
-                      }))
-                    }
-                    onAddPassword={handleAddPassword}
-                    onRemovePassword={handleRemovePassword}
-                  />
                 </tbody>
               </table>
             </div>

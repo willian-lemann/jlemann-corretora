@@ -1,5 +1,6 @@
 export interface Password {
-  id: string;
+  id: string | null;
   key: string;
   value: string;
+  defaultValue: boolean;
 }

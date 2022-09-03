@@ -1,11 +1,17 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { Password } from "../../../types/passwords";
-import { GET_PASSWORDS } from "../queries/passwords";
 
 export const CREATE_PASSWORD = gql`
   mutation ($data: PasswordCreateInput = { key: "", value: "" }) {
     createPassword(data: $data) {
-      documentInStages(stages: PUBLISHED)
+      id
+    }
+  }
+`;
+
+export const PUBLISH_PASSWORD = gql`
+  mutation MyMutation($id: ID = "") {
+    publishPassword(where: { id: $id }, to: PUBLISHED) {
+      id
     }
   }
 `;
@@ -24,25 +30,20 @@ export const useCreatePassword = () => {
   return { createPassword, data, loading, error };
 };
 
-const updateCache = (cache: any, { data }) => {
-  // Fetch the todos from the cache
-  const { passwords } = cache.readQuery({
-    query: GET_PASSWORDS,
-  });
-
-  console.log("passwords", passwords);
-  console.log("data", data);
-
-  cache.writeQuery({
-    query: GET_PASSWORDS,
-    data: { passwords: {} },
-  });
-};
-
 export const useDeletePassword = () => {
   const [deletePassword, { loading, error, data }] =
     useMutation(DELETE_PASSWORD);
-
-  console.log(data);
   return { deletePassword, loading, error, data };
+};
+
+export const usePublishPassword = () => {
+  const [publishPassword, { data, loading, error }] =
+    useMutation(PUBLISH_PASSWORD);
+
+  return {
+    publishPassword,
+    data,
+    loading,
+    error,
+  };
 };
