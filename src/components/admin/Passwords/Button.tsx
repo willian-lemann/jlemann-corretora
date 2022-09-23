@@ -5,12 +5,14 @@ interface ButtonProps {
   loading: boolean;
   onAddPassword: () => Promise<void>;
   onRemovePassword: () => Promise<void>;
+  onOpenModal: () => void;
 }
 
 export const Button = ({
   variant,
   onRemovePassword,
   onAddPassword,
+  onOpenModal,
   loading,
 }: ButtonProps) => {
   if (loading) {
@@ -22,11 +24,17 @@ export const Button = ({
   }
 
   return (
-    <button
-      onClick={() => onRemovePassword()}
-      className="hover:text-red-600 transition-colors duration-300"
-    >
-      Remover
-    </button>
+    <div>
+      <button className="cursor-pointer pr-10" onClick={onOpenModal}>
+        Editar
+      </button>
+
+      <button
+        onClick={() => onRemovePassword()}
+        className="hover:text-red-600 transition-colors duration-300"
+      >
+        Remover
+      </button>
+    </div>
   );
 };

@@ -12,7 +12,6 @@ interface GalleryProps {
 export const Gallery = ({ content }: GalleryProps) => {
   const [selectedNavigation, setSelectedNavigation] = useState(0);
 
-  console.log(content);
   const handleSelectTab = (id: number) => {
     setSelectedNavigation(id);
   };

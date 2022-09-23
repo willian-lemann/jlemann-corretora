@@ -14,16 +14,31 @@ import { PasswordItem, Property } from "./PasswordItem";
 
 export const Passwords = () => {
   const { data } = usePasswords();
-  const {
-    deletePassword,
-    error: hasDeleteError,
-    loading: isDeleting,
-  } = useDeletePassword();
-  const { createPassword, error: hasCreateError } = useCreatePassword();
-  const { publishPassword, error: hasPublishingError } = usePublishPassword();
+  const { deletePassword, error: hasDeleteError } = useDeletePassword();
+  const { createPassword } = useCreatePassword();
+  const { publishPassword } = usePublishPassword();
   const [isAddingPassword, setIsAddingPassword] = useState<string[]>([]);
 
   const [passwords, setPasswords] = useState<Password[]>([]);
+
+  const handleChangeEditInput = useCallback(
+    (id: string | null, key: string, value: string) => {
+      const newPasswords = passwords.map((password) => {
+        if (password.id === id) {
+          return {
+            ...password,
+            key,
+            value,
+          };
+        }
+
+        return password;
+      });
+
+      setPasswords(newPasswords);
+    },
+    [passwords]
+  );
 
   const handleChangeInput = useCallback(
     (id: string | null, property: Property, value: string | null) => {
@@ -65,8 +80,6 @@ export const Passwords = () => {
       { id: uuid(), key: "", value: "", defaultValue: true },
     ]);
   };
-
-  console.log(passwords);
 
   const handleAddPassword = async (password: Password) => {
     if (password.key === "" && password.value === "")
@@ -173,6 +186,7 @@ export const Passwords = () => {
                           String(password.id)
                         )}
                         onChangeData={handleChangeInput}
+                        onEdit={handleChangeEditInput}
                         onAddPassword={handleAddPassword}
                         onRemovePassword={handleRemovePassword}
                       />

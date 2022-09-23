@@ -13,7 +13,7 @@ export const Feature = ({ content }: FeatureProps) => {
   return (
     <section className="bg-white py-10 md:py-16 xl:relative">
       <div className="container max-w-screen-xl mx-auto px-4">
-        <div className="flex flex-col xl:flex-row justify-end">
+        <div className="flex flex-col xl:flex-row justify-end items-center">
           <div className="hidden xl:block xl:absolute left-0 bottom-0 w-full">
             <img src="/assets/image/feature-img.png" alt="Feature img" />
           </div>
