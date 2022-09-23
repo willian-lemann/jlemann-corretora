@@ -58,7 +58,7 @@ export const Passwords = () => {
     [passwords]
   );
 
-  const handleAddMore = (id: string, newId: string) => {
+  const handleAddMore = (id: string | null, newId: string | null) => {
     if (id) {
       const newPasswords = passwords.map((password) => {
         if (password.id === id) {
@@ -141,7 +141,7 @@ export const Passwords = () => {
       <section className="flex justify-end w-full">
         <button
           className="hover:bg-purple-800 hover:text-white py-2 px-2 rounded-md transition-colors duration-300"
-          onClick={handleAddMore}
+          onClick={() => handleAddMore(null, null)}
         >
           Adicionar mais
         </button>
