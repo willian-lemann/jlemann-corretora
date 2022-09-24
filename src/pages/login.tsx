@@ -1,6 +1,29 @@
 import { LockClosedIcon } from "@heroicons/react/20/solid";
+import axios from "axios";
+import { FormEvent, useState } from "react";
+import { addErrorNotification } from "../components/shared/alert";
+import { useAuth } from "../context/AuthContext";
+import { authenticate } from "../services/authenticate";
+import { withSSRGuest } from "../utils/withSSRGuest";
 
-export default function Example() {
+export default function Login() {
+  const { signIn } = useAuth();
+  const [formData, setFormData] = useState({
+    email: "willianleman@gmail.com",
+    password: "american1995",
+  });
+
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+    const { email, password } = formData;
+
+    try {
+      await signIn(email, password);
+    } catch (error) {
+      addErrorNotification("Erro ao fazer login");
+    }
+  };
+
   return (
     <>
       <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -15,7 +38,12 @@ export default function Example() {
               Entrar em JLemann corretora
             </h2>
           </div>
-          <form className="mt-8 space-y-6" action="#" method="POST">
+          <form
+            className="mt-8 space-y-6"
+            action="#"
+            method="POST"
+            onSubmit={handleSubmit}
+          >
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="-space-y-px rounded-md shadow-sm">
               <div>
@@ -94,3 +122,9 @@ export default function Example() {
     </>
   );
 }
+
+export const getServerSideProps = withSSRGuest(async (context) => {
+  return {
+    props: {},
+  };
+});

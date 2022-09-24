@@ -6,6 +6,8 @@ import { ApolloProvider } from "@apollo/client";
 import { AlertProvider } from "../components/shared/alert";
 import { apolloClient } from "../config/apollo";
 
+import { Provider } from "../context";
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
@@ -15,10 +17,13 @@ function MyApp({ Component, pageProps }: AppProps) {
 
         <title>JLemann Corretora</title>
       </Head>
-      <ApolloProvider client={apolloClient}>
-        <AlertProvider />
-        <Component {...pageProps} />
-      </ApolloProvider>
+
+      <Provider>
+        <ApolloProvider client={apolloClient}>
+          <AlertProvider />
+          <Component {...pageProps} />
+        </ApolloProvider>
+      </Provider>
     </>
   );
 }
