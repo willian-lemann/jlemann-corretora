@@ -17,7 +17,7 @@ import { User } from "../models/user";
 interface InitialState {
   currentUser: User | null;
   signIn: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, password: string, name: string) => Promise<void>;
+  signUp: (email: string, password: string) => Promise<void>;
   logOut: () => Promise<void>;
 }
 
