@@ -11,7 +11,7 @@ export function withSSRAuth<P>(fn: GetServerSideProps<P>) {
   ): Promise<GetServerSidePropsResult<P>> => {
     const cookies = parseCookies(context);
 
-    if (!cookies["@jlemann_corretora_token"]) {
+    if (!cookies["@jlemann_corretora.token"]) {
       console.log("caiu aqui");
       return {
         redirect: {

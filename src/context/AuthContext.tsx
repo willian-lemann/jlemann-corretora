@@ -27,7 +27,7 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
-const COOKIE_NAME = "@jlemann_corretor.token";
+const COOKIE_NAME = "@jlemann_corretora.token";
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       name: user.name || "Juciane Lemann",
     });
 
-    Router.push("/");
+    Router.push("/admin");
   }
 
   async function signUp(email: string, password: string) {
@@ -67,7 +67,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       name: user.name || "Juciane Lemann",
     });
 
-    Router.push("/");
+    Router.push("/admin");
   }
 
   async function logOut() {

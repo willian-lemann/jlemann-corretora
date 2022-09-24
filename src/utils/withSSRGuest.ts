@@ -11,10 +11,10 @@ export function withSSRGuest<P>(fn: GetServerSideProps<P>) {
   ): Promise<GetServerSidePropsResult<P>> => {
     const cookies = parseCookies(context);
 
-    if (cookies["@jlemann_corretora_token"]) {
+    if (cookies["@jlemann_corretora.token"]) {
       return {
         redirect: {
-          destination: "/",
+          destination: "/admin",
           permanent: false,
         },
       };

@@ -4,6 +4,7 @@ import { LockClosedIcon } from "@heroicons/react/20/solid";
 
 import { useAuth } from "../../context/AuthContext";
 import { addErrorNotification } from "../shared/alert";
+import { Loading } from "../shared/loading";
 
 interface SignInFormProps {
   children: ReactNode;
@@ -11,6 +12,7 @@ interface SignInFormProps {
 
 export const SignInForm = ({ children }: SignInFormProps) => {
   const { signIn } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -18,12 +20,16 @@ export const SignInForm = ({ children }: SignInFormProps) => {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    setIsLoading(true);
+
     const { email, password } = formData;
 
     try {
       await signIn(email, password);
     } catch (error) {
       addErrorNotification("Erro ao fazer login");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -99,7 +105,7 @@ export const SignInForm = ({ children }: SignInFormProps) => {
               aria-hidden="true"
             />
           </span>
-          Entrar
+          {isLoading ? <Loading /> : " Entrar"}
         </button>
       </div>
     </form>

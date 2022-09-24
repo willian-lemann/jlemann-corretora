@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useMemo } from "react";
 import Image from "next/image";
 
 import { Disclosure, Menu, Tab, Transition } from "@headlessui/react";
@@ -8,6 +8,7 @@ import {
   FiMenu as MenuIcon,
   FiX as XIcon,
 } from "react-icons/fi";
+import { useAuth } from "../../context/AuthContext";
 
 const user = {
   name: "Juciane Lemann",
@@ -28,13 +29,19 @@ const navigation = [
   { name: "Calendario", href: "#", current: false, tabDisabled: false },
   { name: "Relatórios", href: "#", current: false, tabDisabled: false },
 ];
-const userNavigation = [
-  { name: "Meu Perfil", href: "#" },
-  { name: "Configurações", href: "#" },
-  { name: "Sair", href: "#" },
-];
 
 export const Header = () => {
+  const { currentUser, logOut } = useAuth();
+
+  const userNavigation = useMemo(
+    () => [
+      { name: "Meu Perfil", href: "#", handler: () => {} },
+      { name: "Configurações", href: "#", handler: () => {} },
+      { name: "Sair", href: "#", handler: () => logOut() },
+    ],
+    [logOut]
+  );
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -82,6 +89,20 @@ export const Header = () => {
                   {/* Profile dropdown */}
                   <Menu as="div" className="ml-3 relative">
                     <div>
+                      <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                        <span className="sr-only">Open user menu</span>
+                        <Image
+                          className="h-8 w-8 rounded-full"
+                          src={
+                            currentUser?.avatar ??
+                            "https://avatars.githubusercontent.com/u/44612750?v=4"
+                          }
+                          alt="avatar image"
+                          height={38}
+                          width={38}
+                        />
+                      </Menu.Button>
+
                       <Menu.Button className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                         <span className="sr-only">Open user menu</span>
                         <Image
@@ -103,14 +124,15 @@ export const Header = () => {
                       leaveTo="transform opacity-0 scale-95"
                     >
                       <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                        {userNavigation.map((item) => (
-                          <Menu.Item key={item.name}>
+                        {userNavigation.map(({ href, name, handler }) => (
+                          <Menu.Item key={name}>
                             {({ active }) => (
                               <a
-                                href={item.href}
+                                href={href}
                                 className="block px-4 py-2 text-sm text-gray-700"
+                                onClick={handler}
                               >
-                                {item.name}
+                                {name}
                               </a>
                             )}
                           </Menu.Item>

@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Image from "next/image";
+
 import { withSSRGuest } from "../utils/withSSRGuest";
 
 import { SignInForm } from "../components/login/SignInForm";
@@ -9,8 +11,8 @@ export default function Login() {
 
   return (
     <>
-      <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div className="w-full max-w-md space-y-8">
+      <div className="flex justify-between w-screen h-screen">
+        <section className="flex flex-col justify-center m-auto w-1/2 max-w-md  space-y-8">
           <div>
             <img
               className="mx-auto h-12 w-auto"
@@ -43,7 +45,15 @@ export default function Login() {
               </button>
             </SignUpForm>
           )}
-        </div>
+        </section>
+
+        <section className="w-1/2">
+          <img
+            src="/assets/image/login-background.jpg"
+            alt=""
+            className="w-full h-full"
+          />
+        </section>
       </div>
     </>
   );

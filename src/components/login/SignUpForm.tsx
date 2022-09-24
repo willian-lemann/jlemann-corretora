@@ -2,6 +2,8 @@ import { FormEvent, ReactNode, useState } from "react";
 
 import { LockClosedIcon } from "@heroicons/react/20/solid";
 
+import { Loading } from "../../components/shared/loading";
+
 import { useAuth } from "../../context/AuthContext";
 import { addErrorNotification } from "../shared/alert";
 
@@ -11,6 +13,7 @@ interface SignUpFormProps {
 
 export const SignUpForm = ({ children }: SignUpFormProps) => {
   const { signUp } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -18,12 +21,16 @@ export const SignUpForm = ({ children }: SignUpFormProps) => {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    setIsLoading(true);
+
     const { email, password } = formData;
 
     try {
       await signUp(email, password);
     } catch (error) {
       addErrorNotification("Erro ao se cadastrar");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -88,7 +95,7 @@ export const SignUpForm = ({ children }: SignUpFormProps) => {
               aria-hidden="true"
             />
           </span>
-          Cadastrar
+          {isLoading ? <Loading /> : "Cadastrar"}
         </button>
       </div>
     </form>
