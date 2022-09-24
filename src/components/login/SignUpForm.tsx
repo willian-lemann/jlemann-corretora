@@ -36,7 +36,7 @@ export const SignUpForm = ({ children }: SignUpFormProps) => {
 
   return (
     <form
-      className="mt-8 space-y-6"
+      className="mt-8 space-y-6 mx-[1rem]"
       action="#"
       method="POST"
       onSubmit={handleSubmit}

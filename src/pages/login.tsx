@@ -11,8 +11,8 @@ export default function Login() {
 
   return (
     <>
-      <div className="flex justify-between w-screen h-screen">
-        <section className="flex flex-col justify-center m-auto w-1/2 max-w-md  space-y-8">
+      <div className="flex  justify-between w-screen h-screen">
+        <section className="flex flex-col justify-center m-auto md:w-1/2 max-w-md  space-y-8">
           <div>
             <img
               className="mx-auto h-12 w-auto"
@@ -47,7 +47,7 @@ export default function Login() {
           )}
         </section>
 
-        <section className="w-1/2">
+        <section className="hidden md:block w-1/2">
           <img
             src="/assets/image/login-background.jpg"
             alt=""
