@@ -94,7 +94,7 @@ export const Header = () => {
                         <Image
                           className="h-8 w-8 rounded-full"
                           src={
-                            currentUser?.avatar ??
+                            null ??
                             "https://avatars.githubusercontent.com/u/44612750?v=4"
                           }
                           alt="avatar image"
