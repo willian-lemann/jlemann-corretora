@@ -109,11 +109,7 @@ export const Book = () => {
                 type="submit"
                 className="w-full h-[53px] flex items-center justify-center font-semibold text-lg text-white bg-green-700 rounded-xl hover:bg-green-900 transition ease-in-out duration-500"
               >
-                {isLoading ? (
-                  <Loading type="spin" height={20} width={20} />
-                ) : (
-                  "Inscrever-se"
-                )}
+                {isLoading ? <Loading /> : "Inscrever-se"}
               </button>
             </div>
           </form>

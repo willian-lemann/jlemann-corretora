@@ -16,7 +16,7 @@ export const Button = ({
   loading,
 }: ButtonProps) => {
   if (loading) {
-    return <Loading height={20} width={20} color="black" type="spin" />;
+    return <Loading />;
   }
 
   if (variant === "add") {
