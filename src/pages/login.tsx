@@ -4,7 +4,6 @@ import Image from "next/image";
 import { withSSRGuest } from "../utils/withSSRGuest";
 
 import { SignInForm } from "../components/login/SignInForm";
-import { SignUpForm } from "../components/login/SignUpForm";
 
 export default function Login() {
   const [formMode, setFormMode] = useState<"login" | "signup">("login");
@@ -23,28 +22,16 @@ export default function Login() {
               Entrar em JLemann corretora
             </h2>
           </div>
-
-          {formMode === "login" ? (
-            <SignInForm>
-              <button
-                type="button"
-                className="ml-2 block text-sm text-gray-900"
-                onClick={() => setFormMode("signup")}
-              >
-                Cadastrar-me
-              </button>
-            </SignInForm>
-          ) : (
-            <SignUpForm>
-              <button
-                type="button"
-                className="ml-2 block text-sm text-gray-900"
-                onClick={() => setFormMode("login")}
-              >
-                Voltar
-              </button>
-            </SignUpForm>
-          )}
+          <SignInForm>
+            <button
+              type="button"
+              className="ml-2 block text-sm text-gray-900"
+              onClick={() => setFormMode("signup")}
+            >
+              Cadastrar-me
+            </button>
+          </SignInForm>
+          )
         </section>
 
         <section className="hidden md:block w-1/2">
