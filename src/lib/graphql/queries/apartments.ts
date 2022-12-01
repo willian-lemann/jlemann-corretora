@@ -6,11 +6,10 @@ export interface GalleryPhotos {
   };
 }
 
-export const GET_GALLERY_PHOTOS = gql`
+export const GET_APARTMENT_PHOTOS = gql`
   query {
-    apartment(where: { id: "cl5iuthzn20x50blwfmy810oq" }) {
+    apartments {
       id
-      name
       photos {
         id
         url(transformation: { image: { resize: { width: 500, height: 500 } } })
@@ -18,3 +17,4 @@ export const GET_GALLERY_PHOTOS = gql`
     }
   }
 `;
+

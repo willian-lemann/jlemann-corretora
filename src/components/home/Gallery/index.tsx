@@ -12,6 +12,7 @@ interface GalleryProps {
 export const Gallery = ({ content }: GalleryProps) => {
   const [selectedNavigation, setSelectedNavigation] = useState(0);
 
+
   const handleSelectTab = (id: number) => {
     setSelectedNavigation(id);
   };
@@ -23,11 +24,11 @@ export const Gallery = ({ content }: GalleryProps) => {
           {content.title}
         </h1>
 
-        <Tabs
+        {/* <Tabs
           tabs={content.categories}
           selectedNavigation={selectedNavigation}
           onSelectTab={handleSelectTab}
-        />
+        /> */}
 
         <Photos />
       </div>

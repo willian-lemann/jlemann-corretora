@@ -52,6 +52,8 @@ export const getStaticProps: GetStaticProps = async () => {
   const feature = data.page.content.at(1);
   const gallery = data.page.content.at(2);
 
+  console.log(gallery);
+
   return {
     props: {
       header,
