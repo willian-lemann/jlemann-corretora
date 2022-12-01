@@ -7,12 +7,12 @@ import {
 } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBncpegilYtJFgvtUrqV5zdHL8kfWkptbY",
-  authDomain: "jlemann-corretora.firebaseapp.com",
-  projectId: "jlemann-corretora",
-  storageBucket: "jlemann-corretora.appspot.com",
-  messagingSenderId: "291614803698",
-  appId: "1:291614803698:web:d20886c65727bdc300326b",
+  apiKey: process.env.NEXT_PUBLIC_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_AUTHDOMAIN,
+  projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);
