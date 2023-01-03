@@ -4,6 +4,8 @@ import { Header } from "../components/admin/Header";
 import { Passwords } from "../components/admin/Passwords";
 import { withSSRAuth } from "../utils/withSSRAuth";
 
+import { PasswordsProvider } from "../context/password";
+
 const Admin = () => {
   return (
     <Tab.Group as="div" className="min-h-full">
@@ -15,7 +17,9 @@ const Admin = () => {
         </Tab.Panel>
 
         <Tab.Panel>
-          <Passwords />
+          <PasswordsProvider>
+            <Passwords />
+          </PasswordsProvider>
         </Tab.Panel>
       </Tab.Panels>
     </Tab.Group>

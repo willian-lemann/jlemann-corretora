@@ -6,13 +6,9 @@ import {
   forwardRef,
   ChangeEvent,
 } from "react";
-import { Loading } from "../../shared/loading";
+import { usePasswordsContext } from "../../../context/password";
+import { Password } from "../../../models/password";
 
-import {
-  usePublishPassword,
-  useUpdatePassword,
-} from "../../../lib/graphql/mutations/passwords";
-import { Password } from "../../../types/passwords";
 import {
   addErrorNotification,
   addSuccessNotification,
@@ -24,14 +20,11 @@ export interface ModalHandles {
 
 interface EditModalProps {
   password: Password;
-  onEdit: (id: string | null, key: string, value: string) => void;
 }
 
 export const EditModal = forwardRef<ModalHandles, EditModalProps>(
-  ({ password, onEdit }, ref) => {
-    const { updatePassword, isUpdating } = useUpdatePassword();
-    const { publishPassword } = usePublishPassword();
-
+  ({ password }, ref) => {
+    const { editPassword } = usePasswordsContext();
     const [isOpen, setIsOpen] = useState(false);
     const [editData, setEditData] = useState({
       key: password.key,
@@ -56,39 +49,9 @@ export const EditModal = forwardRef<ModalHandles, EditModalProps>(
         return addErrorNotification("Campos vazios, preencha-os!");
       }
 
-      const previousPassword = structuredClone(password);
-
-      onEdit(password.id, editData.key, editData.value);
-
       const { key, value } = editData;
 
-      try {
-        const {
-          data: {
-            updatePassword: { id },
-          },
-        } = await updatePassword({
-          variables: {
-            data: {
-              key,
-              value,
-            },
-            id: { id: password.id },
-          },
-        });
-
-        await publishPassword({ variables: { id } });
-
-        addSuccessNotification("Nova senha salva com sucesso!");
-      } catch (error) {
-        onEdit(
-          previousPassword.id,
-          previousPassword.key,
-          previousPassword.value
-        );
-
-        addErrorNotification("Ocorreu um erro ao salvar a nova senha");
-      }
+      await editPassword(password.id as string, { key, value });
 
       closeModal();
     };
@@ -161,7 +124,7 @@ export const EditModal = forwardRef<ModalHandles, EditModalProps>(
                         className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                         onClick={handleSaveNewPassword}
                       >
-                        {isUpdating ? <Loading /> : "Salvar nova senha!"}
+                        Salvar nova senha!
                       </button>
                     </div>
                   </Dialog.Panel>

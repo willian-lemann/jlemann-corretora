@@ -49,12 +49,11 @@ export const Header = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
               <div className="flex items-center">
-                <div className="flex-shrink-0">
+                <div className="relative w-8 h-8">
                   <Image
-                    height="2rem"
-                    width="2rem"
                     src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
                     alt="Workflow"
+                    fill
                   />
                 </div>
                 <div className="hidden md:block">
@@ -91,27 +90,29 @@ export const Header = () => {
                     <div>
                       <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                         <span className="sr-only">Open user menu</span>
-                        <Image
-                          className="h-8 w-8 rounded-full"
-                          src={
-                            null ??
-                            "https://avatars.githubusercontent.com/u/44612750?v=4"
-                          }
-                          alt="avatar image"
-                          height={38}
-                          width={38}
-                        />
+                        <div className="relative">
+                          <Image
+                            className="h-8 w-8 rounded-full"
+                            src={
+                              null ??
+                              "https://avatars.githubusercontent.com/u/44612750?v=4"
+                            }
+                            alt="avatar image"
+                            fill
+                          />
+                        </div>
                       </Menu.Button>
 
                       <Menu.Button className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                         <span className="sr-only">Open user menu</span>
-                        <Image
-                          height="2rem"
-                          width="2rem"
-                          className="rounded-full"
-                          src={user.imageUrl}
-                          alt="avatar image"
-                        />
+                        <div className="flex-shrink-0 w-8 h-8 relative">
+                          <Image
+                            className="rounded-full"
+                            src={user.imageUrl}
+                            alt="avatar image"
+                            fill
+                          />
+                        </div>
                       </Menu.Button>
                     </div>
                     <Transition
@@ -173,13 +174,12 @@ export const Header = () => {
             </div>
             <div className="pt-4 pb-3 border-t border-gray-700">
               <div className="flex items-center px-5">
-                <div className="flex-shrink-0">
+                <div className="flex-shrink-0 w-10 h-10 relative">
                   <Image
-                    height="2.5rem"
-                    width="2.5rem"
                     className="rounded-full"
                     src={user.imageUrl}
                     alt=""
+                    fill
                   />
                 </div>
                 <div className="ml-3">

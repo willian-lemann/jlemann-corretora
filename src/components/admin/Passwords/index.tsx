@@ -1,144 +1,34 @@
-import { useCallback, useEffect, useState } from "react";
-import { uuid } from "uuidv4";
-import {
-  useCreatePassword,
-  useDeletePassword,
-  usePublishPassword,
-} from "../../../lib/graphql/mutations/passwords";
+import { usePasswordsContext } from "../../../context/password";
 
-import { usePasswords } from "../../../lib/graphql/queries/passwords";
-import { Password } from "../../../types/passwords";
+import { MagnifyingGlassIcon as SearchIcon } from "@heroicons/react/24/outline";
 
-import { addErrorNotification } from "../../shared/alert";
-import { PasswordItem, Property } from "./PasswordItem";
+import { PasswordItem } from "./PasswordItem";
+import { uniqueId } from "../../../utils/uniqueId";
 
 export const Passwords = () => {
-  const { data } = usePasswords();
-  const { deletePassword, error: hasDeleteError } = useDeletePassword();
-  const { createPassword } = useCreatePassword();
-  const { publishPassword } = usePublishPassword();
-  const [isAddingPassword, setIsAddingPassword] = useState<string[]>([]);
-
-  const [passwords, setPasswords] = useState<Password[]>([]);
-
-  const handleChangeEditInput = useCallback(
-    (id: string | null, key: string, value: string) => {
-      const newPasswords = passwords.map((password) => {
-        if (password.id === id) {
-          return {
-            ...password,
-            key,
-            value,
-          };
-        }
-
-        return password;
-      });
-
-      setPasswords(newPasswords);
-    },
-    [passwords]
-  );
-
-  const handleChangeInput = useCallback(
-    (id: string | null, property: Property, value: string | null) => {
-      const newPasswords = passwords.map((password) => {
-        if (password.id === id) {
-          return {
-            ...password,
-            [property]: value,
-          };
-        }
-
-        return password;
-      });
-
-      setPasswords(newPasswords);
-    },
-    [passwords]
-  );
+  const { passwords, mutate, searchPasswords } = usePasswordsContext();
 
   const handleAddMore = (id: string | null, newId: string | null) => {
-    if (id) {
-      const newPasswords = passwords.map((password) => {
-        if (password.id === id) {
-          return {
-            ...password,
-            id: newId,
-            defaultValue: false,
-          };
-        }
-
-        return password;
-      });
-
-      setPasswords(newPasswords);
-    }
-
-    setPasswords((state) => [
+    mutate((state) => [
       ...state,
-      { id: uuid(), key: "", value: "", defaultValue: true },
+      { id: uniqueId(), key: "", value: "", defaultValue: true },
     ]);
   };
 
-  const handleAddPassword = async (password: Password) => {
-    if (password.key === "" && password.value === "")
-      return addErrorNotification("Precisa preeencher os campos!");
-
-    setIsAddingPassword((state) => [...state, String(password.id)]);
-
-    try {
-      const {
-        data: {
-          createPassword: { id },
-        },
-      } = await createPassword({
-        variables: { data: { key: password.key, value: password.value } },
-      });
-
-      const {
-        data: {
-          publishPassword: { id: publishId },
-        },
-      } = await publishPassword({ variables: { id } });
-
-      handleAddMore(String(password.id), publishId);
-    } catch (error) {
-    } finally {
-      setIsAddingPassword((state) =>
-        state.filter((item) => item !== password.id)
-      );
-    }
-  };
-
-  const handleRemovePassword = async (id: string | null) => {
-    const previousPasswords = structuredClone(passwords);
-
-    setPasswords((state) => state.filter((password) => password.id !== id));
-
-    try {
-      await deletePassword({ variables: { id } });
-
-      if (hasDeleteError) {
-        setPasswords(previousPasswords);
-        addErrorNotification(hasDeleteError.message);
-        return;
-      }
-    } catch (error) {
-      setPasswords(previousPasswords);
-      addErrorNotification("Erro ao excluir senha");
-    }
-  };
-
-  useEffect(() => {
-    if (data) {
-      setPasswords((state) => [...state, ...data.passwords]);
-    }
-  }, [data]);
-
   return (
     <div className="container m-auto mx-auto py-6 px-4 sm:px-6 lg:px-8 outline-none">
-      <section className="flex justify-end w-full">
+      <section className="flex gap-4 justify-end w-full">
+        <div className="bg-zinc-100 w-96 relative flex items-center rounded-md border border-zinc-200">
+          <input
+            type="text"
+            placeholder="Procurar por senha"
+            className="pl-2 text-zinc-600 flex-1 rounded-md h-full outline-none bg-transparent"
+            onChange={({ target }) => searchPasswords(target.value)}
+          />
+
+          <SearchIcon className="h-6 w-6 mr-2 text-zinc-600" />
+        </div>
+
         <button
           className="hover:bg-purple-800 hover:text-white py-2 px-2 rounded-md transition-colors duration-300"
           onClick={() => handleAddMore(null, null)}
@@ -176,21 +66,8 @@ export const Passwords = () => {
                 </thead>
 
                 <tbody>
-                  {passwords?.map((password) => (
-                    <>
-                      <PasswordItem
-                        key={password.id}
-                        defaultValue={password.defaultValue}
-                        password={password}
-                        isAdding={isAddingPassword.includes(
-                          String(password.id)
-                        )}
-                        onChangeData={handleChangeInput}
-                        onEdit={handleChangeEditInput}
-                        onAddPassword={handleAddPassword}
-                        onRemovePassword={handleRemovePassword}
-                      />
-                    </>
+                  {passwords.map((password) => (
+                    <PasswordItem key={password.id} password={password} />
                   ))}
                 </tbody>
               </table>

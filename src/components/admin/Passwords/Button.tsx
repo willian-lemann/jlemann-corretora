@@ -1,8 +1,8 @@
+import { usePasswordsContext } from "../../../context/password";
 import { Loading } from "../../shared/loading";
 
 interface ButtonProps {
   variant: "remove" | "add";
-  loading: boolean;
   onAddPassword: () => Promise<void>;
   onRemovePassword: () => Promise<void>;
   onOpenModal: () => void;
@@ -13,12 +13,7 @@ export const Button = ({
   onRemovePassword,
   onAddPassword,
   onOpenModal,
-  loading,
 }: ButtonProps) => {
-  if (loading) {
-    return <Loading />;
-  }
-
   if (variant === "add") {
     return <button onClick={() => onAddPassword()}>Adicionar</button>;
   }

@@ -7,7 +7,7 @@ import { addErrorNotification } from "../shared/alert";
 import { Loading } from "../shared/loading";
 
 interface SignInFormProps {
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 export const SignInForm = ({ children }: SignInFormProps) => {
@@ -16,16 +16,17 @@ export const SignInForm = ({ children }: SignInFormProps) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    name: "",
   });
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     setIsLoading(true);
 
-    const { email, password } = formData;
+    const { email, password, name } = formData;
 
     try {
-      await signIn(email, password);
+      await signIn(email, password, name);
     } catch (error) {
       addErrorNotification("Erro ao fazer login");
     } finally {
@@ -54,16 +55,36 @@ export const SignInForm = ({ children }: SignInFormProps) => {
             autoComplete="email"
             required
             className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Email address"
+            placeholder="Email"
             value={formData.email}
             onChange={({ target }) =>
               setFormData({ ...formData, email: target.value })
             }
           />
         </div>
+
+        <div>
+          <label htmlFor="email-address" className="sr-only">
+            Nome
+          </label>
+          <input
+            id="email-address"
+            name="name"
+            type="text"
+            autoComplete="name"
+            required
+            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+            placeholder="Nome"
+            value={formData.name}
+            onChange={({ target }) =>
+              setFormData({ ...formData, name: target.value })
+            }
+          />
+        </div>
+
         <div>
           <label htmlFor="password" className="sr-only">
-            Password
+            Senha
           </label>
           <input
             id="password"
@@ -72,25 +93,12 @@ export const SignInForm = ({ children }: SignInFormProps) => {
             autoComplete="current-password"
             required
             className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Password"
+            placeholder="Senha"
             value={formData.password}
             onChange={({ target }) =>
               setFormData({ ...formData, password: target.value })
             }
           />
-        </div>
-      </div>
-
-      <div className="flex items-center justify-between">
-        {children}
-
-        <div className="text-sm">
-          <a
-            href="#"
-            className="font-medium text-indigo-600 hover:text-indigo-500"
-          >
-            Esqueceu sua senha?
-          </a>
         </div>
       </div>
 
