@@ -25,7 +25,11 @@ export const GET_PAGE_CONTENT = gql`
 
         ... on Gallery {
           title
-          categories
+          categories,
+          apartments {
+          	id,
+         		name
+					}
         }
       }
     }

@@ -1,20 +1,21 @@
 import { gql } from "@apollo/client";
 
-export interface GalleryPhotos {
-  page: {
-    content: [];
-  };
-}
-
-export const GET_APARTMENT_PHOTOS = gql`
+export const GET_APARTMENTS = gql`
   query {
     apartments {
       id
-      photos {
-        id
-        url(transformation: { image: { resize: { width: 500, height: 500 } } })
-      }
+      name
     }
   }
 `;
 
+export const GET_APARTMENT_PHOTOS = gql`
+  query MyQuery($apartmentId: ApartmentWhereUniqueInput = {}) {
+    apartment(where: $apartmentId) {
+      photos {
+        id
+        url(transformation: { image: { resize: { width: 1280, height: 720 } } })
+      }
+    }
+  }
+`;

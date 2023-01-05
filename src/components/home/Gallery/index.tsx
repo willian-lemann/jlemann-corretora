@@ -10,11 +10,10 @@ interface GalleryProps {
 }
 
 export const Gallery = ({ content }: GalleryProps) => {
-  const [selectedNavigation, setSelectedNavigation] = useState(0);
+  const [apartmentId, setApartmentId] = useState("");
 
-
-  const handleSelectTab = (id: number) => {
-    setSelectedNavigation(id);
+  const handleSelectTab = (id: string) => {
+    setApartmentId(id);
   };
 
   return (
@@ -24,13 +23,13 @@ export const Gallery = ({ content }: GalleryProps) => {
           {content.title}
         </h1>
 
-        {/* <Tabs
-          tabs={content.categories}
-          selectedNavigation={selectedNavigation}
+        <Tabs
+          tabs={content.apartments}
+          selectedNavigation={apartmentId}
           onSelectTab={handleSelectTab}
-        /> */}
+        />
 
-        <Photos />
+        <Photos apartmentId={apartmentId} />
       </div>
     </section>
   );

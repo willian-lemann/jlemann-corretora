@@ -1,7 +1,24 @@
-export const Photos = () => {
+import Image from "next/image";
+import { useApartmentPhotos } from "../../../context/apartment/useApartmentPhotos";
+import { useApartments } from "../../../context/apartment/useApartments";
+import { Carousel } from "./Carousel";
+
+interface PhotosProps {
+  apartmentId: string;
+}
+
+export const Photos = ({ apartmentId }: PhotosProps) => {
+  const { photos, loading } = useApartmentPhotos(apartmentId);
+
+  if (loading) {
+    return <p>loading...</p>;
+  }
+
+  console.log(photos);
   return (
     <div className="flex space-x-4 md:space-x-6 lg:space-x-8">
-      <div>
+      <Carousel photos={photos} />
+      {/* <div>
         <img
           src="/assets/image/gallery-1.png"
           alt="image"
@@ -42,7 +59,7 @@ export const Photos = () => {
           alt="image"
           className="hover:opacity-75 transition ease-in-out duration-500"
         />
-      </div>
+      </div> */}
     </div>
   );
 };

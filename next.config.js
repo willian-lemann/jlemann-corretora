@@ -10,6 +10,7 @@ const nextConfig = {
       "tailwindui.com",
       "images.unsplash.com",
       "avatars.githubusercontent.com",
+      "media.graphassets.com",
     ],
   },
 };
