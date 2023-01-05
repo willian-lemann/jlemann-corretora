@@ -17,9 +17,9 @@ export const Tabs = ({ tabs, selectedNavigation, onSelectTab }: TabsProps) => {
           }}
           className={`${
             item.id === selectedNavigation
-              ? "bg-green-800 text-white hover:bg-green-900 hover:text-gray-200"
+              ? "bg-zinc-300"
               : "hover:bg-gray-200 hover:text-gray-400"
-          } m-0 px-6 py-2 text-gray-900 font-normal cursor-pointer text-xl rounded-lg transition ease-in-out duration-300`}
+          } m-0 px-6 py-2 bg-transparent text-gray-900 font-normal cursor-pointer text-xl rounded-lg transition ease-in-out duration-300`}
           onClick={() => onSelectTab(item.id)}
         >
           {item.name}

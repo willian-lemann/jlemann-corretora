@@ -18,12 +18,12 @@ export const Carousel = ({ photos }: CarouselProps) => {
       centerMode
     >
       {photos?.map((photo) => (
-        <div key={photo.id} className="bg-purple-400 w-[500px] h-[600px]">
+        <div key={photo.id} className="bg-purple-400 h-[600px]">
           <Image
             src={photo.url}
             alt="apartment photo"
             fill
-            className="mb-4 md:mb-6 lg:mb-8 hover:opacity-75 transition ease-in-out duration-500"
+            className="mb-4 md:mb-6 object-cover lg:mb-8 hover:opacity-75 transition ease-in-out duration-500"
           />
         </div>
       ))}
