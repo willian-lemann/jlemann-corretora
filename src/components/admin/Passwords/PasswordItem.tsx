@@ -16,6 +16,7 @@ interface PasswordItemProps {
 export const PasswordItem = memo(({ password }: PasswordItemProps) => {
   const { passwords, addNewPassword, mutate } = usePasswordsContext();
   const [deleteItem, setDeleteItem] = useState("");
+  const [editItem, setEditItem] = useState("");
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -36,12 +37,7 @@ export const PasswordItem = memo(({ password }: PasswordItemProps) => {
 
   return (
     <>
-      <tr
-        className={classNames(
-          password.defaultValue ? "hidden md:flex" : "",
-          "bg-white border-b last:border-none transition duration-300 ease-in-out hover:bg-gray-100 relative"
-        )}
-      >
+      <tr className="bg-white border-b last:border-none transition duration-300 ease-in-out hover:bg-gray-100 relative">
         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
           <input
             ref={inputRef}
@@ -49,7 +45,7 @@ export const PasswordItem = memo(({ password }: PasswordItemProps) => {
             className="outline-none px-2 text-sm w-full max-w-xs bg-transparent border-none"
             value={password.key}
             placeholder="Digite o nome da senha"
-            disabled={!password.defaultValue}
+            disabled
             onChange={({ target }) =>
               handleChangeData(password.id as string, "key", target.value)
             }
@@ -61,23 +57,22 @@ export const PasswordItem = memo(({ password }: PasswordItemProps) => {
             type="text"
             className="w-full max-w-xs outline-none border-none px-2 text-sm bg-transparent"
             value={password.value}
-            disabled={!password.defaultValue}
+            disabled
             placeholder="Digite o valor para a senha"
             onChange={({ target }) =>
               handleChangeData(password?.id as string, "value", target.value)
             }
           />
         </td>
-        <td className="flex justify-end md:block text-sm text-gray-900 font-light px-2 md:px-6  py-4 md:min-w-[200px] min-w-0">
+        <td className="justify-end md:flex text-sm text-gray-900 font-light px-2 md:px-6  py-4 md:min-w-[200px] min-w-0">
           <Button
-            variant={password.defaultValue ? "add" : "remove"}
-            onAddPassword={() => addNewPassword(password)}
+            onEditItem={() => setEditItem(password.id as string)}
             onDeleteItem={() => setDeleteItem(password.id as string)}
           />
         </td>
       </tr>
 
-      <EditModal password={password} />
+      <EditModal editItem={password.id as string} password={password} />
       <DeleteModal deleteItem={deleteItem} password={password} />
     </>
   );

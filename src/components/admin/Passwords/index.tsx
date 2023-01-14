@@ -10,15 +10,8 @@ import { uniqueId } from "../../../utils/uniqueId";
 import { AddModal } from "./AddModal";
 
 export const Passwords = () => {
-  const { passwords, isEmpty, mutate, searchPasswords, togglePasswordModal } =
+  const { passwords, isEmpty, searchPasswords, togglePasswordModal } =
     usePasswordsContext();
-
-  const handleAddMore = (id: string | null, newId: string | null) => {
-    mutate((state) => [
-      ...state,
-      { id: uniqueId(), key: "", value: "", defaultValue: true },
-    ]);
-  };
 
   return (
     <div className="container m-auto mx-auto py-6 px-4 sm:px-6 lg:px-8 outline-none">
@@ -35,18 +28,11 @@ export const Passwords = () => {
         </div>
 
         <button
-          className="hidden md:flex items-center hover:bg-gray-800 hover:text-white py-2 px-2 rounded-md transition-colors duration-300"
-          onClick={() => handleAddMore(null, null)}
-        >
-          Adicionar mais
-        </button>
-
-        <button
           className="flex items-center hover:bg-gray-800 hover:text-white py-2 px-2 rounded-md transition-colors duration-300"
           onClick={() => togglePasswordModal("add")}
         >
           <span className="hidden md:block"> Adicionar mais </span>
-          <AddIcon className="h-8 w-8" />
+          <AddIcon className="block md:hidden h-8 w-8" />
         </button>
       </section>
 

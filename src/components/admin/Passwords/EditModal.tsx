@@ -20,9 +20,10 @@ export interface EditModalHandles {
 
 interface EditModalProps {
   password: Password;
+  editItem: string;
 }
 
-export const EditModal = ({ password }: EditModalProps) => {
+export const EditModal = ({ editItem, password }: EditModalProps) => {
   const { editPassword, passwordModal, togglePasswordModal } =
     usePasswordsContext();
 
@@ -50,7 +51,11 @@ export const EditModal = ({ password }: EditModalProps) => {
 
   return (
     <>
-      <Transition appear show={passwordModal.isEditModalOpen} as={Fragment}>
+      <Transition
+        appear
+        show={passwordModal.isEditModalOpen && editItem === password.id}
+        as={Fragment}
+      >
         <Dialog
           as="div"
           className="relative z-10"
@@ -110,7 +115,7 @@ export const EditModal = ({ password }: EditModalProps) => {
                     </section>
                   </div>
 
-                  <div className="mt-10">
+                  <div className="mt-10 flex justify-end">
                     <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"

@@ -1,31 +1,23 @@
 import { TrashIcon, PencilIcon } from "@heroicons/react/24/solid";
 import { usePasswordsContext } from "../../../context/password";
 interface ButtonProps {
-  variant: "remove" | "add";
-  onAddPassword: () => Promise<void>;
+  onEditItem(): void;
   onDeleteItem(): void;
 }
 
-export const Button = ({
-  variant,
-  onAddPassword,
-  onDeleteItem,
-}: ButtonProps) => {
+export const Button = ({ onDeleteItem, onEditItem }: ButtonProps) => {
   const { togglePasswordModal } = usePasswordsContext();
 
-  if (variant === "add") {
-    return <button onClick={() => onAddPassword()}>Adicionar</button>;
-  }
-
   return (
-    <div className="flex items-center">
+    <div className="flex items-center gap-4">
       <button
-        className="flex  cursor-pointer pr-4"
-        onClick={() => togglePasswordModal("edit")}
+        className="flex cursor-pointer"
+        onClick={() => {
+          togglePasswordModal("edit");
+          onEditItem();
+        }}
       >
-        <span className="hidden md:block">Editar</span>
-
-        <PencilIcon className="text-zinc-500 h-6 w-6 md:hidden" />
+        <PencilIcon className="text-zinc-500 h-5 w-5" />
       </button>
 
       <button
@@ -35,9 +27,7 @@ export const Button = ({
         }}
         className=" hover:text-red-600 transition-colors duration-300"
       >
-        <span className="hidden md:block">Remover</span>
-
-        <TrashIcon className="block md:hidden text-red-600 h-6 w-6 " />
+        <TrashIcon className="text-red-600 h-6 w-6" />
       </button>
     </div>
   );

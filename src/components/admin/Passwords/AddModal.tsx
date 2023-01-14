@@ -36,8 +36,6 @@ export const AddModal = () => {
 
   const handleSaveNewPassword = async () => {
     await addNewPassword(newPassword);
-
-    togglePasswordModal("add");
   };
 
   return (

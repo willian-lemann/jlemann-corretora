@@ -51,7 +51,7 @@ export function usePasswords(): ContextParams {
       edit: () =>
         setPasswordModal((state) => ({
           ...state,
-          isAddModalOpen: !state.isEditModalOpen,
+          isEditModalOpen: !state.isEditModalOpen,
         })),
 
       delete: () =>
@@ -69,13 +69,12 @@ export function usePasswords(): ContextParams {
   };
 
   const addNewPassword = async (password: Password) => {
-    if (password.key === "" && password.value === "") {
+    if (password.key === "" || password.value === "") {
       return addErrorNotification("Precisa preeencher os campos!");
     }
 
     const previousPasswords = structuredClone(passwords);
 
-    console.log("new", password);
     setPasswords((state) => [
       ...state,
       {
@@ -84,8 +83,9 @@ export function usePasswords(): ContextParams {
         value: password.value,
         defaultValue: false,
       },
-      { id: uniqueId(), key: "", value: "", defaultValue: true },
     ]);
+
+    togglePasswordModal("add");
 
     try {
       await createPasswordService(password);

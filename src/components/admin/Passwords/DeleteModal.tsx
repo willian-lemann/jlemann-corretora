@@ -57,7 +57,7 @@ export const DeleteModal = ({ deleteItem, password }: DeleteModalProps) => {
                 </Dialog.Title>
 
                 <div className="my-4">
-                  <span>Você está deletando</span>
+                  <span>Você está deletando:</span>
                   <p className="rounded-md bg-zinc-100 py-2 px-2 my-2">
                     {password.value}
                   </p>
@@ -67,7 +67,10 @@ export const DeleteModal = ({ deleteItem, password }: DeleteModalProps) => {
                   <button onClick={() => togglePasswordModal("delete")}>
                     Cancelar
                   </button>
-                  <button className="bg-red-600 text-white rounded-md px-2 py-2" onClick={() => removePassword(password.id as string)}>
+                  <button
+                    className="bg-red-600 text-white rounded-md px-2 py-2"
+                    onClick={() => removePassword(password.id as string)}
+                  >
                     Deletar
                   </button>
                 </div>
