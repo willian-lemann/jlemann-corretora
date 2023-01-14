@@ -21,6 +21,16 @@ const Admin = () => {
             <Passwords />
           </PasswordsProvider>
         </Tab.Panel>
+
+        <Tab.Panel>
+          <h1>gerencimento</h1>
+        </Tab.Panel>
+        <Tab.Panel>
+          <h1>gerencimento</h1>
+        </Tab.Panel>
+        <Tab.Panel>
+          <h1>gerencimento</h1>
+        </Tab.Panel>
       </Tab.Panels>
     </Tab.Group>
   );

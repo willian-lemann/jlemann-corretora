@@ -1,6 +1,4 @@
-import { usePasswordsContext } from "../../../context/password";
-import { Loading } from "../../shared/loading";
-
+import { TrashIcon, PencilIcon } from "@heroicons/react/24/solid";
 interface ButtonProps {
   variant: "remove" | "add";
   onAddPassword: () => Promise<void>;
@@ -19,16 +17,19 @@ export const Button = ({
   }
 
   return (
-    <div>
-      <button className="cursor-pointer pr-10" onClick={onOpenModal}>
-        Editar
+    <div className="flex items-center">
+      <button className="flex  cursor-pointer pr-10" onClick={onOpenModal}>
+        <span className="hidden md:block">Editar</span>
+
+        <PencilIcon className="h-6 w-6 md:hidden" />
       </button>
 
       <button
         onClick={() => onRemovePassword()}
         className="hover:text-red-600 transition-colors duration-300"
       >
-        Remover
+        <span className="hidden md:block">Remover</span>
+        <TrashIcon className="h-6 w-6 md:hidden" />
       </button>
     </div>
   );

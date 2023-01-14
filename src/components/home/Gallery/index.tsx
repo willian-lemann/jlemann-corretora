@@ -10,7 +10,9 @@ interface GalleryProps {
 }
 
 export const Gallery = ({ content }: GalleryProps) => {
-  const [apartmentId, setApartmentId] = useState("");
+  const [apartmentId, setApartmentId] = useState(
+    content.apartments.at(0)?.id as string
+  );
 
   const handleSelectTab = (id: string) => {
     setApartmentId(id);

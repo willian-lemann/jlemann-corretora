@@ -40,7 +40,7 @@ export const PasswordItem = memo(({ password }: PasswordItemProps) => {
 
   return (
     <>
-      <tr className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100 relative">
+      <tr className="bg-white border-b last:border-none transition duration-300 ease-in-out hover:bg-gray-100 relative">
         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
           <input
             ref={inputRef}
@@ -66,7 +66,7 @@ export const PasswordItem = memo(({ password }: PasswordItemProps) => {
             }
           />
         </td>
-        <td className="text-sm text-gray-900 font-light px-6 py-4 min-w-[200px]">
+        <td className="flex justify-end md:block text-sm text-gray-900 font-light px-2 md:px-6  py-4 min-w-[200px]">
           <Button
             variant={password.defaultValue ? "add" : "remove"}
             onOpenModal={handleOpenModal}
