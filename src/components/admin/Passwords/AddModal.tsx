@@ -9,52 +9,44 @@ import {
 import { usePasswordsContext } from "../../../context/password";
 import { Password } from "../../../models/password";
 
-import {
-  addErrorNotification,
-  addSuccessNotification,
-} from "../../shared/alert";
+import { addErrorNotification } from "../../shared/alert";
 
-export interface EditModalHandles {
+export interface AddModalHandles {
   openModal: () => void;
 }
 
 interface EditModalProps {
-  password: Password;
+  password?: Password;
 }
 
-export const EditModal = ({ password }: EditModalProps) => {
-  const { editPassword, passwordModal, togglePasswordModal } =
+export const AddModal = () => {
+  const { passwordModal, addNewPassword, togglePasswordModal } =
     usePasswordsContext();
-
-  const [editData, setEditData] = useState({
-    key: password.key,
-    value: password.value,
+  const [newPassword, setNewPassword] = useState({
+    key: "",
+    value: "",
   });
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
     const { name, value } = event.target;
-    setEditData({ ...editData, [name]: value });
+    setNewPassword((state) => ({ ...state, [name]: value }));
   };
 
   const handleSaveNewPassword = async () => {
-    if (editData.key.length === 0 && editData.value.length === 0) {
-      return addErrorNotification("Campos vazios, preencha-os!");
-    }
+    await addNewPassword(newPassword);
 
-    const { key, value } = editData;
-
-    await editPassword(password.id as string, { key, value });
-
-    togglePasswordModal("edit");
+    togglePasswordModal("add");
   };
 
   return (
     <>
-      <Transition appear show={passwordModal.isEditModalOpen} as={Fragment}>
+      <Transition appear show={passwordModal.isAddModalOpen} as={Fragment}>
         <Dialog
           as="div"
           className="relative z-10"
-          onClose={() => togglePasswordModal("edit")}
+          onClose={() => togglePasswordModal("add")}
         >
           <Transition.Child
             as={Fragment}
@@ -84,39 +76,46 @@ export const EditModal = ({ password }: EditModalProps) => {
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Editar Senha
+                    Adicionar nova Senha
                   </Dialog.Title>
-                  <div className="mt-2">
+                  <div className="mt-6">
                     <section>
                       <p className="text-sm text-gray-500">Nome da Senha</p>
                       <input
-                        className="w-full border-b-2 max-w-xs outline-none px-2 text-sm bg-transparent"
-                        type="text"
+                        className="w-full border-b-2  outline-none px-2 py-2 text-sm bg-transparent"
                         name="key"
-                        value={editData.key}
+                        placeholder="Nome da sua senha..."
+                        value={newPassword.key}
                         onChange={handleChange}
                       />
                     </section>
 
                     <section className="mt-5">
-                      <p>Valor da Senha</p>
-                      <input
-                        className="w-full max-w-xs outline-none border-b-2 px-2 text-sm bg-transparent"
-                        type="text"
+                      <p className="text-sm text-gray-500">Valor da Senha</p>
+                      <textarea
+                        className="w-full h-40 outline-none rounded-md border resize-y px-2 py-2 mt-2 text-sm bg-transparent"
                         name="value"
-                        value={editData.value}
+                        placeholder="Digite o valor..."
+                        value={newPassword.value}
                         onChange={handleChange}
                       />
                     </section>
                   </div>
 
-                  <div className="mt-10">
+                  <div className="mt-10 w-full flex justify-end gap-2">
+                    <button
+                      type="button"
+                      className="inline-flex  justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      onClick={() => togglePasswordModal("add")}
+                    >
+                      Cancelar
+                    </button>
                     <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={handleSaveNewPassword}
                     >
-                      Salvar nova senha!
+                      Salvar
                     </button>
                   </div>
                 </Dialog.Panel>

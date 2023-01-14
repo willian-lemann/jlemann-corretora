@@ -7,9 +7,11 @@ import {
 
 import { PasswordItem } from "./PasswordItem";
 import { uniqueId } from "../../../utils/uniqueId";
+import { AddModal } from "./AddModal";
 
 export const Passwords = () => {
-  const { passwords, mutate, searchPasswords } = usePasswordsContext();
+  const { passwords, isEmpty, mutate, searchPasswords, togglePasswordModal } =
+    usePasswordsContext();
 
   const handleAddMore = (id: string | null, newId: string | null) => {
     mutate((state) => [
@@ -33,8 +35,15 @@ export const Passwords = () => {
         </div>
 
         <button
-          className="flex items-center hover:bg-gray-800 hover:text-white py-2 px-2 rounded-md transition-colors duration-300"
+          className="hidden md:flex items-center hover:bg-gray-800 hover:text-white py-2 px-2 rounded-md transition-colors duration-300"
           onClick={() => handleAddMore(null, null)}
+        >
+          Adicionar mais
+        </button>
+
+        <button
+          className="flex items-center hover:bg-gray-800 hover:text-white py-2 px-2 rounded-md transition-colors duration-300"
+          onClick={() => togglePasswordModal("add")}
         >
           <span className="hidden md:block"> Adicionar mais </span>
           <AddIcon className="h-8 w-8" />
@@ -45,24 +54,25 @@ export const Passwords = () => {
         <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
             <div>
-              <table className="min-w-full table-auto">
-                <thead className="bg-white">
-                  <tr>
-                    <th
-                      scope="col"
-                      className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
-                    >
-                      <h1 className="text-lg">Senhas</h1>
-                    </th>
-                  </tr>
-                </thead>
+              <div className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                <h1 className="text-lg">Senhas</h1>
+              </div>
 
-                <tbody>
-                  {passwords.map((password) => (
-                    <PasswordItem key={password.id} password={password} />
-                  ))}
-                </tbody>
-              </table>
+              {isEmpty ? (
+                <div className=" p-4 bg-zinc-100 rounded-md text-center">
+                  <h1>Nenhuma senha cadastrada</h1>
+                </div>
+              ) : (
+                <table className="min-w-full table-auto">
+                  <tbody>
+                    {passwords.map((password) => (
+                      <PasswordItem key={password.id} password={password} />
+                    ))}
+                  </tbody>
+                </table>
+              )}
+
+              <AddModal />
             </div>
           </div>
         </div>

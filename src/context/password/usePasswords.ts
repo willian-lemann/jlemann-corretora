@@ -11,22 +11,58 @@ import { removePasswordService } from "../../services/password/remove-password";
 import { updatePasswordService } from "../../services/password/update-password";
 import { uniqueId } from "../../utils/uniqueId";
 
+type ModalTypes = "add" | "edit" | "delete";
 export interface ContextParams {
   isEmpty: boolean;
   isLoading: boolean;
   passwords: Password[];
   mutate: Dispatch<SetStateAction<Password[]>>;
   search: string;
+  passwordModal: {
+    isAddModalOpen: boolean;
+    isEditModalOpen: boolean;
+    isDeleteModalOpen: boolean;
+  };
   addNewPassword(password: Password): Promise<void>;
   editPassword(id: string, data: Partial<Password>): Promise<void>;
   removePassword(id: string): Promise<void>;
   searchPasswords(search: string): void;
+  togglePasswordModal(modalTypes: ModalTypes): void;
 }
 
 export function usePasswords(): ContextParams {
   const [passwords, setPasswords] = useState<Password[]>([]);
   const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [passwordModal, setPasswordModal] = useState({
+    isAddModalOpen: false,
+    isEditModalOpen: false,
+    isDeleteModalOpen: false,
+  });
+
+  const togglePasswordModal = (modal: ModalTypes) => {
+    const functionBasedOnModal = {
+      add: () =>
+        setPasswordModal((state) => ({
+          ...state,
+          isAddModalOpen: !state.isAddModalOpen,
+        })),
+
+      edit: () =>
+        setPasswordModal((state) => ({
+          ...state,
+          isAddModalOpen: !state.isEditModalOpen,
+        })),
+
+      delete: () =>
+        setPasswordModal((state) => ({
+          ...state,
+          isDeleteModalOpen: !state.isDeleteModalOpen,
+        })),
+    };
+
+    return functionBasedOnModal[modal]();
+  };
 
   const searchPasswords = (value: string) => {
     setSearch(value);
@@ -39,8 +75,15 @@ export function usePasswords(): ContextParams {
 
     const previousPasswords = structuredClone(passwords);
 
+    console.log("new", password);
     setPasswords((state) => [
       ...state,
+      {
+        id: uniqueId(),
+        key: password.key,
+        value: password.value,
+        defaultValue: false,
+      },
       { id: uniqueId(), key: "", value: "", defaultValue: true },
     ]);
 
@@ -85,6 +128,8 @@ export function usePasswords(): ContextParams {
 
     setPasswords(newPasswords);
 
+    togglePasswordModal("delete");
+
     try {
       await removePasswordService(id);
     } catch (error) {
@@ -121,9 +166,11 @@ export function usePasswords(): ContextParams {
     passwords: data,
     search,
     mutate: setPasswords,
+    passwordModal,
     addNewPassword,
     editPassword,
     removePassword,
     searchPasswords,
+    togglePasswordModal,
   };
 }

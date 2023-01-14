@@ -1,10 +1,11 @@
 import { memo, useRef, useState } from "react";
 import { usePasswordsContext } from "../../../context/password";
-import { usePasswords } from "../../../context/password/usePasswords";
 
 import { Password } from "../../../models/password";
+import { classNames } from "../../../utils/classNames";
 import { Button } from "./Button";
-import { EditModal, ModalHandles } from "./EditModal";
+import { DeleteModal } from "./DeleteModal";
+import { EditModal, EditModalHandles } from "./EditModal";
 
 export type Property = "key" | "value";
 
@@ -13,15 +14,10 @@ interface PasswordItemProps {
 }
 
 export const PasswordItem = memo(({ password }: PasswordItemProps) => {
-  const { passwords, addNewPassword, removePassword, mutate } =
-    usePasswordsContext();
+  const { passwords, addNewPassword, mutate } = usePasswordsContext();
+  const [deleteItem, setDeleteItem] = useState("");
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const modalRef = useRef<ModalHandles>(null);
-
-  const handleOpenModal = () => {
-    modalRef.current?.openModal();
-  };
 
   const handleChangeData = (id: string, property: string, value: string) => {
     const newPasswords = passwords.map((password) => {
@@ -40,7 +36,12 @@ export const PasswordItem = memo(({ password }: PasswordItemProps) => {
 
   return (
     <>
-      <tr className="bg-white border-b last:border-none transition duration-300 ease-in-out hover:bg-gray-100 relative">
+      <tr
+        className={classNames(
+          password.defaultValue ? "hidden md:flex" : "",
+          "bg-white border-b last:border-none transition duration-300 ease-in-out hover:bg-gray-100 relative"
+        )}
+      >
         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
           <input
             ref={inputRef}
@@ -60,23 +61,24 @@ export const PasswordItem = memo(({ password }: PasswordItemProps) => {
             type="text"
             className="w-full max-w-xs outline-none border-none px-2 text-sm bg-transparent"
             value={password.value}
+            disabled={!password.defaultValue}
             placeholder="Digite o valor para a senha"
             onChange={({ target }) =>
               handleChangeData(password?.id as string, "value", target.value)
             }
           />
         </td>
-        <td className="flex justify-end md:block text-sm text-gray-900 font-light px-2 md:px-6  py-4 min-w-[200px]">
+        <td className="flex justify-end md:block text-sm text-gray-900 font-light px-2 md:px-6  py-4 md:min-w-[200px] min-w-0">
           <Button
             variant={password.defaultValue ? "add" : "remove"}
-            onOpenModal={handleOpenModal}
             onAddPassword={() => addNewPassword(password)}
-            onRemovePassword={() => removePassword(password.id as string)}
+            onDeleteItem={() => setDeleteItem(password.id as string)}
           />
         </td>
       </tr>
 
-      <EditModal ref={modalRef} password={password} />
+      <EditModal password={password} />
+      <DeleteModal deleteItem={deleteItem} password={password} />
     </>
   );
 });
