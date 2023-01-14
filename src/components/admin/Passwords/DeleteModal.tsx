@@ -6,19 +6,14 @@ import { Password } from "../../../models/password";
 
 interface DeleteModalProps {
   password: Password;
-  deleteItem: string;
 }
 
-export const DeleteModal = ({ deleteItem, password }: DeleteModalProps) => {
+export const DeleteModal = ({ password }: DeleteModalProps) => {
   const { togglePasswordModal, passwordModal, removePassword } =
     usePasswordsContext();
 
   return (
-    <Transition
-      appear
-      show={passwordModal.isDeleteModalOpen && deleteItem === password.id}
-      as={Fragment}
-    >
+    <Transition appear show={passwordModal.isDeleteModalOpen} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-10"

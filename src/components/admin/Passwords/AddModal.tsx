@@ -36,6 +36,11 @@ export const AddModal = () => {
 
   const handleSaveNewPassword = async () => {
     await addNewPassword(newPassword);
+
+    setNewPassword({
+      key: "",
+      value: "",
+    });
   };
 
   return (

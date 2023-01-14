@@ -8,10 +8,28 @@ import {
 import { PasswordItem } from "./PasswordItem";
 import { uniqueId } from "../../../utils/uniqueId";
 import { AddModal } from "./AddModal";
+import { useCallback, useState } from "react";
+import { Password } from "../../../models/password";
+import { DeleteModal } from "./DeleteModal";
+import { EditModal } from "./EditModal";
 
 export const Passwords = () => {
   const { passwords, isEmpty, searchPasswords, togglePasswordModal } =
     usePasswordsContext();
+
+  const [deletePassword, setDeletePassword] = useState({
+    key: "",
+    value: "",
+  });
+  const [editPassword, setEditPassword] = useState<Password | null>(null);
+
+  const handleEditItem = useCallback((password: Password) => {
+    setEditPassword(password);
+  }, []);
+
+  const handleDeleteItem = useCallback((password: Password) => {
+    setDeletePassword(password);
+  }, []);
 
   return (
     <div className="container m-auto mx-auto py-6 px-4 sm:px-6 lg:px-8 outline-none">
@@ -52,13 +70,20 @@ export const Passwords = () => {
                 <table className="min-w-full table-auto">
                   <tbody>
                     {passwords.map((password) => (
-                      <PasswordItem key={password.id} password={password} />
+                      <PasswordItem
+                        key={password.id}
+                        password={password}
+                        onEditItem={handleEditItem}
+                        onDeleteItem={handleDeleteItem}
+                      />
                     ))}
                   </tbody>
                 </table>
               )}
 
               <AddModal />
+              <EditModal key={editPassword?.id} password={editPassword} />
+              <DeleteModal key={deletePassword.key} password={deletePassword} />
             </div>
           </div>
         </div>

@@ -19,43 +19,35 @@ export interface EditModalHandles {
 }
 
 interface EditModalProps {
-  password: Password;
-  editItem: string;
+  password: Password | null;
 }
 
-export const EditModal = ({ editItem, password }: EditModalProps) => {
+export const EditModal = ({ password }: EditModalProps) => {
   const { editPassword, passwordModal, togglePasswordModal } =
     usePasswordsContext();
 
-  const [editData, setEditData] = useState({
-    key: password.key,
-    value: password.value,
-  });
+  const [editData, setEditData] = useState(password as Password);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setEditData({ ...editData, [name]: value });
+    setEditData((state) => ({ ...state, [name]: value }));
   };
 
   const handleSaveNewPassword = async () => {
-    if (editData.key.length === 0 && editData.value.length === 0) {
+    if (editData?.key.length === 0 && editData.value.length === 0) {
       return addErrorNotification("Campos vazios, preencha-os!");
     }
 
-    const { key, value } = editData;
+    const { key, value } = editData as Password;
 
-    await editPassword(password.id as string, { key, value });
+    await editPassword(password?.id as string, { key, value });
 
     togglePasswordModal("edit");
   };
 
   return (
     <>
-      <Transition
-        appear
-        show={passwordModal.isEditModalOpen && editItem === password.id}
-        as={Fragment}
-      >
+      <Transition appear show={passwordModal.isEditModalOpen} as={Fragment}>
         <Dialog
           as="div"
           className="relative z-10"
@@ -98,7 +90,7 @@ export const EditModal = ({ editItem, password }: EditModalProps) => {
                         className="w-full border-b-2 max-w-xs outline-none px-2 text-sm bg-transparent"
                         type="text"
                         name="key"
-                        value={editData.key}
+                        value={editData?.key}
                         onChange={handleChange}
                       />
                     </section>
@@ -109,7 +101,7 @@ export const EditModal = ({ editItem, password }: EditModalProps) => {
                         className="w-full max-w-xs outline-none border-b-2 px-2 text-sm bg-transparent"
                         type="text"
                         name="value"
-                        value={editData.value}
+                        value={editData?.value}
                         onChange={handleChange}
                       />
                     </section>
