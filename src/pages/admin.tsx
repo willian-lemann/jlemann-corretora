@@ -5,6 +5,7 @@ import { Passwords } from "../components/admin/Passwords";
 import { withSSRAuth } from "../utils/withSSRAuth";
 
 import { PasswordsProvider } from "../context/password";
+import { Projects } from "../components/admin/Projects";
 
 const Admin = () => {
   return (
@@ -25,11 +26,17 @@ const Admin = () => {
         <Tab.Panel>
           <h1>gerencimento</h1>
         </Tab.Panel>
+
         <Tab.Panel>
-          <h1>gerencimento</h1>
+          <Projects />
         </Tab.Panel>
+
         <Tab.Panel>
-          <h1>gerencimento</h1>
+          <h1>Calendario</h1>
+        </Tab.Panel>
+
+        <Tab.Panel>
+          <h1>Relatorios</h1>
         </Tab.Panel>
       </Tab.Panels>
     </Tab.Group>
