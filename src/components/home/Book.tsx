@@ -38,13 +38,13 @@ export const Book = () => {
   return (
     <section id="contacts" className="bg-white py-10 md:py-16">
       <div className="container max-w-screen-xl mx-auto px-4 xl:relative">
-        <div className="bg-green-800 flex flex-col lg:flex-row items-center justify-evenly py-14 rounded-3xl">
+        <div className="bg-rose-50 flex flex-col lg:flex-row items-center justify-evenly py-14 rounded-3xl">
           <div className="text-center lg:text-left mb-10 lg:mb-0">
-            <h1 className="font-semibold text-white text-4xl md:text-5xl lg:leading-[5rem] lg:text-7xl mb-4">
+            <h1 className="font-semibold text-zinc-800 text-4xl md:text-5xl lg:leading-[5rem] lg:text-7xl mb-4">
               Fale com a gente
               <br /> para discutir
             </h1>
-            <p className="font-normal text-white text-md md:text-xl">
+            <p className="font-normal text-zinc-800 text-md md:text-xl">
               Need more time to discuss? Won’t worry, we are
               <br /> ready to help you. You can fill in the column on the <br />
               right to book a meeting with us. Totally free.
@@ -107,7 +107,7 @@ export const Book = () => {
             <div className="py-3">
               <button
                 type="submit"
-                className="w-full h-[53px] flex items-center justify-center font-semibold text-lg text-white bg-green-700 rounded-xl hover:bg-green-900 transition ease-in-out duration-500"
+                className="w-full h-[53px] flex items-center justify-center font-semibold text-lg text-white bg-rose-600 rounded-xl hover:brightness-90 transition ease-in-out duration-500"
               >
                 {isLoading ? <Loading /> : "Inscrever-se"}
               </button>
